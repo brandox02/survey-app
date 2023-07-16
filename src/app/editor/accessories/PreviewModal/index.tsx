@@ -8,7 +8,7 @@ import { Model } from 'survey-core';
 type Props = {
    isOpen: boolean,
    close: () => void,
-   questions: QuestionElement
+   questions: Array<QuestionElement>
 }
 export default function PreviewModal({ close, isOpen, questions }: Props) {
    if (isOpen) {

@@ -16,7 +16,7 @@ export default function TextField({ singleLine, onChange, value }: TextField) {
          />
          <input
 
-            className={`bg-[#F9F9F9] border border-gray-300 p-2 outline-none ${singleLine ? "" : 'h-28'}`}
+            className={`bg-[#F9F9F9] border border-gray-300 p-2 outline-none ${singleLine ? "" : 'h-32'}`}
             disabled
             multiple={!singleLine}
          />

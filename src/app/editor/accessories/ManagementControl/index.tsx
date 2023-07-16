@@ -1,5 +1,6 @@
 'use client';
 
+import CheckBox from "@/components/Checkbox";
 import SelectField from "@/components/Select";
 import TextField from "@/components/TextField";
 import { NotRequiredQuestionElement, QuestionElement } from "../../page";
@@ -24,13 +25,20 @@ export default function ManagementControl({ selectedElement, setCurrentElement }
          <div className='mt-5 font-bold text-lg text-center'>Configuración</div>
          <div className='mt-10 px-10'>
             <TextField label="Titulo" value={selectedElement?.title} onChange={(event) => setCurrentElement({ title: event.target.value })} />
-            <TextField label="Nombre" value={selectedElement?.name} onChange={(event) => setCurrentElement({ name: event.target.value })} />
+            <TextField label="Nombre" value={selectedElement?.name} onChange={(event) => setCurrentElement({ name: event.target.value })} disabled={true} />
             <SelectField
                label='Tipo'
                options={[{ label: 'texto', 'value': 'text' }, { label: 'número', value: 'number' }]}
                value={getTypeValue()}
                onChange={e => setCurrentElement({ inputType: e?.value })}
             />
+            <div className="ml-2 mt-3">
+               <CheckBox
+                  checked={selectedElement.type === 'comment'}
+                  toggle={(checked) => setCurrentElement({ type: checked ? 'comment' : 'text' })}
+                  label={'Multi-Linea'}
+               />
+            </div>
          </div>
       </div>
    )
