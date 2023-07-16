@@ -9,7 +9,7 @@ export default function Menu() {
    >
       {/* <Image src={YoCreoEnTi} alt={'Yo creo en ti'} className={'my-5'} width={180} />
       <Image src={MenuGirl} alt={'Menu Girl'} className={''} /> */}
-      <span className='mt-5 text-xl font-bold'>Encuesta App</span>
+      <span className='mt-5 text-2xl font-bold text-gray-100'>Encuesta App</span>
       <div className=' mt-10'>
          {menuItems.map(({ icon, label, to }, index) => (
             <MenuItem key={index} label={label} icon={icon} to={to} />

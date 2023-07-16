@@ -9,7 +9,7 @@ import ItemSideMenu from './Item';
 export default function ItemsSideMenu() {
 
    return (
-      <div className='border w-32 bg-white h-full'>
+      <div className='border w-24 bg-white h-full'>
          {/* <div className='mt-5 font-bold text-lg text-center'>Elementos</div> */}
          <div className='mt-10 relative'>
             <ItemSideMenu icon={BsCursorText} label='Input Text' />
