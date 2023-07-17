@@ -2,6 +2,7 @@
 
 import TextField from "@/components/TextField";
 import { NotRequiredQuestionElement, QuestionElement } from "../../page";
+import BooleanManagementControl from "./BooleanManagementControl";
 import CheckboxGroupManagementControl from "./CheckboxGroupManagementControl";
 import CommentManagementControl from "./CommentManagementControl";
 import RadioGroupManagementControl from "./RadioGroupManagementControl";
@@ -21,6 +22,7 @@ export default function ManagementControl({ selectedElement, setCurrentElement }
             comment: <CommentManagementControl {...props} />,
             radiogroup: <RadioGroupManagementControl {...props} />,
             checkbox: <CheckboxGroupManagementControl {...props} />,
+            boolean: <BooleanManagementControl {...props} />,
          }
          return (obj as any)[selectedElement.type]
       }

@@ -11,6 +11,7 @@ import { useState } from 'react';
 import PreviewModal from './accessories/PreviewModal';
 import RadioGroup from './accessories/Elements/RadioGroup';
 import CheckboxGroup from './accessories/Elements/CheckboxGroup';
+import Boolean from './accessories/Elements/Boolean';
 
 type QuestionType = 'text' | 'comment' | 'radiogroup' | 'checkbox' | 'boolean'
 
@@ -98,12 +99,12 @@ const initialQuestions: Array<QuestionElement> = [
       isRequired: false
    },
    {
-      name: "LastName",
+      name: "dfdw",
       title: "Enter your last name:",
       type: "radiogroup",
       choices: [
-         { text: 'modofoca', value: 'modofoca' },
-         { text: 'straight it up', value: 'straight it up' },
+         { text: 'modofoca22', value: 'modofeqwewqoca' },
+         { text: 'straight 22it up', value: 'straiewqeght it up' },
       ],
       isRequired: true
    },
@@ -112,15 +113,15 @@ const initialQuestions: Array<QuestionElement> = [
       title: "Enter your last name:",
       type: "checkbox",
       choices: [
-         { text: 'modofoca', value: 'modofoca' },
-         { text: 'straight it up', value: 'straight it up' },
+         { text: 'modof123oca', value: 'modoeqwewqfoca' },
+         { text: 'straight312 it up', value: 'straewqeqwight it up' },
       ],
       isRequired: true
    },
    {
-      name: "LastName",
-      title: "Enter your last name:",
-      type: "radiogroup",
+      name: "boolean",
+      title: "boolean:",
+      type: "boolean",
       labelTrue: 'Sí',
       labelFalse: 'No',
       isRequired: true
@@ -160,6 +161,12 @@ export default function Editor() {
             value={questions[index]?.title || ''}
             onChange={e => setCurrentElement({ title: e.target.value })}
             choices={(questions[index] as RadioGroupQuestion).choices}
+         />,
+         boolean: <Boolean
+            value={questions[index]?.title || ''}
+            onChange={e => setCurrentElement({ title: e.target.value })}
+            falseLabel={(questions[index] as BooleanQuestion).labelFalse}
+            trueLabel={(questions[index] as BooleanQuestion).labelTrue}
          />,
       }
 
