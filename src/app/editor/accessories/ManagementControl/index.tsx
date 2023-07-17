@@ -1,5 +1,6 @@
 'use client';
 
+import Button from "@/components/Button";
 import TextField from "@/components/TextField";
 import { NotRequiredQuestionElement, QuestionElement } from "../../page";
 import BooleanManagementControl from "./BooleanManagementControl";
@@ -42,6 +43,9 @@ export default function ManagementControl({ selectedElement, setCurrentElement }
             />
             {/* <TextField label="Nombre" value={selectedElement?.name} onChange={(event) => setCurrentElement({ name: event.target.value })} disabled={true} /> */}
             {getManagementControl()}
+
+
+            <Button text="Eliminar este elemento" color="blue" classname="w-full mt-5" />
          </div>
       </div>
    )

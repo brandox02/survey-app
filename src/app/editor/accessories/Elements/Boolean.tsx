@@ -12,7 +12,7 @@ export default function Boolean({ onChange, value, falseLabel, trueLabel }: Text
       <div className={`flex flex-col gap-3 p-8`}>
          <div className="flex justify-between">
             <input
-               className="outline-none hover:border font-medium py-1 border-gray-300"
+               className="outline-none hover:border font-medium py-1 border-gray-300  w-9/12"
                value={value}
                onChange={onChange}
             />

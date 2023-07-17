@@ -1,5 +1,5 @@
 'use client';
-
+import { Toaster } from 'react-hot-toast';
 
 
 type Props = {
@@ -8,5 +8,8 @@ type Props = {
 
 export default function Providers({ children }: Props) {
 
-   return children;
+   return <>
+      {children}
+      <Toaster />
+   </>;
 }

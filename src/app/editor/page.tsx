@@ -12,8 +12,10 @@ import PreviewModal from './accessories/PreviewModal';
 import RadioGroup from './accessories/Elements/RadioGroup';
 import CheckboxGroup from './accessories/Elements/CheckboxGroup';
 import Boolean from './accessories/Elements/Boolean';
+import toast from 'react-hot-toast';
+import { v4 as uuid } from 'uuid';
 
-type QuestionType = 'text' | 'comment' | 'radiogroup' | 'checkbox' | 'boolean'
+export type QuestionType = 'text' | 'comment' | 'radiogroup' | 'checkbox' | 'boolean'
 
 interface BaseQuestion {
    name: string;
@@ -70,85 +72,85 @@ const ItemWrapper = ({ onClick, children, isSelected, ...restProps }: ItemWrappe
 )
 
 const initialQuestions: Array<QuestionElement> = [
-   {
-      name: "Nombr3efds",
-      title: "Introduce tu nombre:",
-      type: "text",
-      inputType: 'text',
-      isRequired: false
+   // {
+   //    name: "Nombr3efds",
+   //    title: "Introduce tu nombre:",
+   //    type: "text",
+   //    inputType: 'text',
+   //    isRequired: false
 
-   },
-   {
-      name: "dsfd5s",
-      title: "Introduce tu apellido:",
-      type: "text",
-      inputType: 'text',
-      isRequired: false
-   },
-   {
-      name: "edv4cxad",
-      title: "Introduce tu edad:",
-      type: "text",
-      inputType: 'number',
-      isRequired: false
-   },
-   {
-      name: "dv1cxfdw",
-      title: "Enter your last name:",
-      type: "radiogroup",
-      choices: [
-         { text: 'modofoca22', value: 'modofeqwewqoca' },
-         { text: 'straight 22it up', value: 'straiewqeght it up' },
-      ],
-      isRequired: true
-   },
-   {
-      name: "2vcxvcx",
-      title: "Enter your last name:",
-      type: "checkbox",
-      choices: [
-         { text: 'modof123oca', value: 'modoeqwewqfoca' },
-         { text: 'straight312 it up', value: 'straewqeqwight it up' },
-      ],
-      isRequired: true
-   },
-   {
-      name: "vcvx4",
-      title: "boolean:",
-      type: "boolean",
-      labelTrue: 'Sí',
-      labelFalse: 'No',
-      isRequired: true
-   },
-   {
-      name: "dfcxxxxxdw3",
-      title: "Enter your last name:",
-      type: "radiogroup",
-      choices: [
-         { text: 'modofoca22', value: 'modofeqwewqoca' },
-         { text: 'straight 22it up', value: 'straiewqeght it up' },
-      ],
-      isRequired: true
-   },
-   {
-      name: "xxcx1",
-      title: "Enter your last name:",
-      type: "radiogroup",
-      choices: [
-         { text: 'modofoca22', value: 'modofeqwewqoca' },
-         { text: 'straight 22it up', value: 'straiewqeght it up' },
-      ],
-      isRequired: true
-   }, {
-      name: "dfxacidw2",
-      title: "Enter your last name:",
-      type: "radiogroup",
-      choices: [
-         { text: 'modofoca22', value: 'modofeqwewqoca' },
-         { text: 'straight 22it up', value: 'straiewqeght it up' },
-      ],
-      isRequired: true
-   },
+   // },
+   // {
+   //    name: "dsfd5s",
+   //    title: "Introduce tu apellido:",
+   //    type: "text",
+   //    inputType: 'text',
+   //    isRequired: false
+   // },
+   // {
+   //    name: "edv4cxad",
+   //    title: "Introduce tu edad:",
+   //    type: "text",
+   //    inputType: 'number',
+   //    isRequired: false
+   // },
+   // {
+   //    name: "dv1cxfdw",
+   //    title: "Enter your last name:",
+   //    type: "radiogroup",
+   //    choices: [
+   //       { text: 'modofoca22', value: 'modofeqwewqoca' },
+   //       { text: 'straight 22it up', value: 'straiewqeght it up' },
+   //    ],
+   //    isRequired: true
+   // },
+   // {
+   //    name: "2vcxvcx",
+   //    title: "Enter your last name:",
+   //    type: "checkbox",
+   //    choices: [
+   //       { text: 'modof123oca', value: 'modoeqwewqfoca' },
+   //       { text: 'straight312 it up', value: 'straewqeqwight it up' },
+   //    ],
+   //    isRequired: true
+   // },
+   // {
+   //    name: "vcvx4",
+   //    title: "boolean:",
+   //    type: "boolean",
+   //    labelTrue: 'Sí',
+   //    labelFalse: 'No',
+   //    isRequired: true
+   // },
+   // {
+   //    name: "dfcxxxxxdw3",
+   //    title: "Enter your last name:",
+   //    type: "radiogroup",
+   //    choices: [
+   //       { text: 'modofoca22', value: 'modofeqwewqoca' },
+   //       { text: 'straight 22it up', value: 'straiewqeght it up' },
+   //    ],
+   //    isRequired: true
+   // },
+   // {
+   //    name: "xxcx1",
+   //    title: "Enter your last name:",
+   //    type: "radiogroup",
+   //    choices: [
+   //       { text: 'modofoca22', value: 'modofeqwewqoca' },
+   //       { text: 'straight 22it up', value: 'straiewqeght it up' },
+   //    ],
+   //    isRequired: true
+   // }, {
+   //    name: "dfxacidw2",
+   //    title: "Enter your last name:",
+   //    type: "radiogroup",
+   //    choices: [
+   //       { text: 'modofoca22', value: 'modofeqwewqoca' },
+   //       { text: 'straight 22it up', value: 'straiewqeght it up' },
+   //    ],
+   //    isRequired: true
+   // },
 ]
 
 export default function Editor() {
@@ -214,6 +216,62 @@ export default function Editor() {
 
    };
 
+   function addNewElement(type: QuestionType) {
+      const id = uuid();
+      const obj = {
+         'text': {
+            name: id,
+            title: `Single Line Text Field`,
+            type: "text",
+            inputType: 'text',
+            isRequired: true
+
+         },
+         'comment': {
+            name: id,
+            title: `Multi Line text Field`,
+            type: "comment",
+            inputType: 'text',
+            isRequired: true
+         },
+         'radiogroup': {
+            name: id,
+            title: `Radio Group Field`,
+            type: "radiogroup",
+            choices: [
+               { text: 'modofoca22', value: 'modofeqwewqoca' },
+               { text: 'straight 22it up', value: 'straiewqeght it up' },
+            ],
+            isRequired: true
+         },
+         'checkbox': {
+            name: id,
+            title: `Checkbox Field`,
+            type: "checkbox",
+            choices: [
+               { text: 'modof123oca', value: 'modoeqwewqfoca' },
+               { text: 'straight312 it up', value: 'straewqeqwight it up' },
+            ],
+            isRequired: true
+         },
+         'boolean': {
+            name: id,
+            title: `Boolean Field`,
+            type: "boolean",
+            labelTrue: 'Sí',
+            labelFalse: 'No',
+            isRequired: true
+         },
+      }
+
+      let newItem = (obj as any)[type];
+
+      if (!newItem) {
+         toast.error('No se pudo agregar el elemento');
+      }
+      setQuestions(questions => ([...questions, newItem]));
+   }
+
    // const [items, setItems] = useState([{ id: 1, name: 'a' }, { id: 2, name: 'b' }, { id: 3, name: 'c' }, { id: 4, name: 'd' }]);
    return (
       <div className="h-full w-full relative overflow-hidden">
@@ -221,7 +279,7 @@ export default function Editor() {
          <PreviewModal close={() => setIsOpenPreviewModal(false)} isOpen={isOpenPreviewModal} questions={questions} />
 
          <div className='flex justify-between border relative bg-gray-100 h-full w-full overflow-auto pb-20'>
-            <ItemsSideMenu />
+            <ItemsSideMenu onAddNewItem={addNewElement} />
             <div className='w-7/12 p-20 flex flex-col gap-3 overflow-auto'>
                <DragDropContext onDragEnd={handleDragEnd}>
                   <Droppable droppableId={`mezclando`}>

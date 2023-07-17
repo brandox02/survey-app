@@ -4,15 +4,16 @@ type Props = {
    text: string;
    classname?: string;
    onClick?: () => void;
+   color?: 'blue' | 'red'
 }
 
-export default function Button({ text, classname = '', onClick = () => { } }: Props) {
+export default function Button({ text, classname = '', onClick = () => { }, color = 'blue' }: Props) {
 
    return (
       <button
 
          onClick={onClick}
-         className={`bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-6 border border-blue-700 rounded ${classname}`}
+         className={`bg-${color}-500 hover:bg-${color}-700 text-white font-bold py-2 px-6 border border-${color}-700 rounded ${classname}`}
       >
          {text}
       </button>
