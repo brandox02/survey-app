@@ -12,12 +12,13 @@ import TextFieldManagementControl from "./TextFieldManagementControl";
 export interface ManagementControlProps {
    selectedElement: QuestionElement
    setCurrentElement: (newElement: NotRequiredQuestionElement) => void
+   onDeleteCurrentElement: () => void
 }
 
-export default function ManagementControl({ selectedElement, setCurrentElement }: ManagementControlProps) {
+export default function ManagementControl({ selectedElement, setCurrentElement, onDeleteCurrentElement }: ManagementControlProps) {
    function getManagementControl() {
       if (selectedElement) {
-         const props = { selectedElement, setCurrentElement }
+         const props = { selectedElement, setCurrentElement, onDeleteCurrentElement }
          const obj = {
             text: <TextFieldManagementControl {...props} />,
             comment: <CommentManagementControl {...props} />,
@@ -34,18 +35,18 @@ export default function ManagementControl({ selectedElement, setCurrentElement }
          <div className='mt-10 px-10'>
             <TextField
                label="Elemento"
-               value={selectedElement?.type} disabled onChange={() => { }}
+               value={selectedElement?.type || ''} disabled onChange={() => { }}
             />
             <TextField
                label="Titulo"
-               value={selectedElement?.title}
+               value={selectedElement?.title || ''}
                onChange={(event) => setCurrentElement({ title: event.target.value })}
             />
-            {/* <TextField label="Nombre" value={selectedElement?.name} onChange={(event) => setCurrentElement({ name: event.target.value })} disabled={true} /> */}
+            <TextField label="Nombre" value={selectedElement?.name || ''} onChange={(event) => setCurrentElement({ name: event.target.value })} disabled={true} />
             {getManagementControl()}
 
 
-            <Button text="Eliminar este elemento" color="blue" classname="w-full mt-5" />
+            <Button text="Eliminar este elemento" color="blue" classname="w-full mt-5" onClick={onDeleteCurrentElement} />
          </div>
       </div>
    )

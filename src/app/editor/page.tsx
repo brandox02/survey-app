@@ -205,7 +205,6 @@ export default function Editor() {
       setSelectedElementIndex(index);
    }
 
-
    const handleDragEnd = (result: any) => {
       console.log('klk', result)
       if (!result.destination) return;
@@ -272,6 +271,14 @@ export default function Editor() {
       setQuestions(questions => ([...questions, newItem]));
    }
 
+   function onDeleteCurrentElement() {
+      if (selectedElementIndex === -1) {
+         toast.error('Debes seleccionar un elemento');
+      }
+      setQuestions(questions => questions.filter((_, index) => index !== selectedElementIndex));
+      setSelectedElementIndex(-1);
+   }
+
    // const [items, setItems] = useState([{ id: 1, name: 'a' }, { id: 2, name: 'b' }, { id: 3, name: 'c' }, { id: 4, name: 'd' }]);
    return (
       <div className="h-full w-full relative overflow-hidden">
@@ -311,7 +318,7 @@ export default function Editor() {
                   </Droppable>
                </DragDropContext>
             </div>
-            <ManagementControl {...{ selectedElement, setCurrentElement }} />
+            <ManagementControl {...{ selectedElement, setCurrentElement }} onDeleteCurrentElement={onDeleteCurrentElement} />
          </div>
       </div>
    )
