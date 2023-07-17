@@ -59,10 +59,11 @@ type ItemWrapper = {
    isSelected: boolean;
 }
 
-const ItemWrapper = ({ onClick, children, isSelected }: ItemWrapper) => (
+const ItemWrapper = ({ onClick, children, isSelected, ...restProps }: ItemWrapper) => (
    <div
       onClick={onClick}
-      className={`bg-white border-2  ${isSelected ? "border-emerald-400" : 'hover:border-orange-200 border-gray-200'}`}
+      className={`bg-white border-2 my-2 ${isSelected ? "border-emerald-400" : 'hover:border-orange-200 border-gray-200'}`}
+      {...restProps}
    >
       {children}
    </div>
@@ -70,7 +71,7 @@ const ItemWrapper = ({ onClick, children, isSelected }: ItemWrapper) => (
 
 const initialQuestions: Array<QuestionElement> = [
    {
-      name: "Nombre",
+      name: "Nombr3efds",
       title: "Introduce tu nombre:",
       type: "text",
       inputType: 'text',
@@ -78,21 +79,21 @@ const initialQuestions: Array<QuestionElement> = [
 
    },
    {
-      name: "apellido",
+      name: "dsfd5s",
       title: "Introduce tu apellido:",
       type: "text",
       inputType: 'text',
       isRequired: false
    },
    {
-      name: "edad",
+      name: "edv4cxad",
       title: "Introduce tu edad:",
       type: "text",
       inputType: 'number',
       isRequired: false
    },
    {
-      name: "dfdw",
+      name: "dv1cxfdw",
       title: "Enter your last name:",
       type: "radiogroup",
       choices: [
@@ -102,7 +103,7 @@ const initialQuestions: Array<QuestionElement> = [
       isRequired: true
    },
    {
-      name: "LastName",
+      name: "2vcxvcx",
       title: "Enter your last name:",
       type: "checkbox",
       choices: [
@@ -112,7 +113,7 @@ const initialQuestions: Array<QuestionElement> = [
       isRequired: true
    },
    {
-      name: "boolean",
+      name: "vcvx4",
       title: "boolean:",
       type: "boolean",
       labelTrue: 'Sí',
@@ -120,7 +121,7 @@ const initialQuestions: Array<QuestionElement> = [
       isRequired: true
    },
    {
-      name: "dfdw",
+      name: "dfcxxxxxdw3",
       title: "Enter your last name:",
       type: "radiogroup",
       choices: [
@@ -130,7 +131,7 @@ const initialQuestions: Array<QuestionElement> = [
       isRequired: true
    },
    {
-      name: "dfdw",
+      name: "xxcx1",
       title: "Enter your last name:",
       type: "radiogroup",
       choices: [
@@ -139,7 +140,7 @@ const initialQuestions: Array<QuestionElement> = [
       ],
       isRequired: true
    }, {
-      name: "dfdw",
+      name: "dfxacidw2",
       title: "Enter your last name:",
       type: "radiogroup",
       choices: [
@@ -203,15 +204,16 @@ export default function Editor() {
    }
 
 
-   // const handleDragEnd = (result: any) => {
-   //    if (!result.destination) return;
+   const handleDragEnd = (result: any) => {
+      console.log('klk', result)
+      if (!result.destination) return;
+      const updatedQuestions = Array.from(questions);
+      const [reorderedQuestion] = updatedQuestions.splice(result.source.index, 1);
+      updatedQuestions.splice(result.destination.index, 0, reorderedQuestion);
+      setQuestions(updatedQuestions);
 
-   //    const updatedQuestions = Array.from(questions.elements);
-   //    const [reorderedQuestion] = updatedQuestions.splice(result.source.index, 1);
-   //    updatedQuestions.splice(result.destination.index, 0, reorderedQuestion);
+   };
 
-   //    setQuestions(surveyElement => ({ ...surveyElement, elements: updatedQuestions }));
-   // };
    // const [items, setItems] = useState([{ id: 1, name: 'a' }, { id: 2, name: 'b' }, { id: 3, name: 'c' }, { id: 4, name: 'd' }]);
    return (
       <div className="h-full w-full relative overflow-hidden">
@@ -221,28 +223,27 @@ export default function Editor() {
          <div className='flex justify-between border relative bg-gray-100 h-full w-full overflow-auto pb-20'>
             <ItemsSideMenu />
             <div className='w-7/12 p-20 flex flex-col gap-3 overflow-auto'>
-               {questions.map((question, index) => (
-                  <ItemWrapper
-                     key={question.name}
-                     onClick={() => onSelectItem(index)}
-                     isSelected={index === selectedElementIndex}
-                  >{renderItem(question, index)}
-                  </ItemWrapper>
-               ))}
-               {/* <DragDropContext onDragEnd={handleDragEnd}>
-                  <Droppable droppableId="survey-questions">
+               <DragDropContext onDragEnd={handleDragEnd}>
+                  <Droppable droppableId={`mezclando`}>
                      {(provided) => (
                         <div ref={provided.innerRef} {...provided.droppableProps}>
-                           {questions.elements.map((question, index) => (
-                              <Draggable key={question.name} draggableId={question.name} index={index}>
+                           {questions.map((item, index) => (
+                              <Draggable key={item.name} draggableId={item.name} index={index}>
                                  {(provided) => (
                                     <div
                                        ref={provided.innerRef}
                                        {...provided.draggableProps}
                                        {...provided.dragHandleProps}
                                     >
-                                       {renderItem(question)}
+                                       <ItemWrapper
+                                          key={item.name}
+                                          onClick={() => onSelectItem(index)}
+                                          isSelected={index === selectedElementIndex}
+                                       >
+                                          {renderItem(item, index)}
+                                       </ItemWrapper>
                                     </div>
+
                                  )}
                               </Draggable>
                            ))}
@@ -250,7 +251,7 @@ export default function Editor() {
                         </div>
                      )}
                   </Droppable>
-               </DragDropContext> */}
+               </DragDropContext>
             </div>
             <ManagementControl {...{ selectedElement, setCurrentElement }} />
          </div>
