@@ -15,34 +15,27 @@ import Boolean from './accessories/Elements/Boolean';
 
 type QuestionType = 'text' | 'comment' | 'radiogroup' | 'checkbox' | 'boolean'
 
-export type TextFieldQuestion = {
+interface BaseQuestion {
    name: string;
    title: string;
    type: QuestionType,
+   isRequired: boolean;
+}
+
+export interface TextFieldQuestion extends BaseQuestion {
+
    inputType: 'text' | 'number';
-   isRequired: boolean;
 }
 
-export type RadioGroupQuestion = {
-   name: string;
-   title: string;
-   type: QuestionType;
-   isRequired: boolean;
+export interface RadioGroupQuestion extends BaseQuestion {
    choices: Array<{ text: string, value: string }>
 }
 
-export type CheckboxGroupQuestion = {
-   name: string;
-   title: string;
-   type: QuestionType;
-   isRequired: boolean;
+export interface CheckboxGroupQuestion extends BaseQuestion {
+
    choices: Array<{ text: string, value: string }>
 }
-export type BooleanQuestion = {
-   name: string;
-   title: string;
-   type: QuestionType;
-   isRequired: boolean;
+export interface BooleanQuestion extends BaseQuestion {
    labelTrue: string;
    labelFalse: string;
 }
@@ -136,7 +129,10 @@ export default function Editor() {
 
    function setCurrentElement(newElement: NotRequiredQuestionElement) {
       if (selectedElement) {
-         setQuestions(questions => questions.map((question, index) => index === selectedElementIndex ? { ...selectedElement, ...newElement } : question))
+         setQuestions(questions => questions.map((question, index) => {
+            const mixed = { ...selectedElement, ...newElement } as QuestionElement;
+            return index === selectedElementIndex ? mixed : question
+         }))
       }
    }
 
@@ -167,7 +163,7 @@ export default function Editor() {
             onChange={e => setCurrentElement({ title: e.target.value })}
             falseLabel={(questions[index] as BooleanQuestion).labelFalse}
             trueLabel={(questions[index] as BooleanQuestion).labelTrue}
-         />,
+         />
       }
 
       return (obj as any)[question.type]
