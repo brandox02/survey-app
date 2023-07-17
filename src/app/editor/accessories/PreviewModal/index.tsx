@@ -11,15 +11,20 @@ type Props = {
    questions: Array<QuestionElement>
 }
 export default function PreviewModal({ close, isOpen, questions }: Props) {
+   console.log({ questions })
    if (isOpen) {
       const surveyModel = new Model({ elements: questions });
+
+      surveyModel.onComplete.add((data) => {
+         console.log({ data: data.data })
+      })
       return (
          (
-            <>
+            <div className="">
                <div
-                  className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none w-screen"
+                  className="justify-center items-center flex border overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none w-screen"
                >
-                  <div className="relative w-auto my-6 mx-full ">
+                  <div className="relative w-auto my-6 ">
                      {/*content*/}
                      <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
                         {/*header*/}
@@ -61,7 +66,7 @@ export default function PreviewModal({ close, isOpen, questions }: Props) {
                   </div>
                </div>
                <div className="opacity-25 fixed inset-0 z-40 bg-black"></div>
-            </>
+            </div>
          )
       )
    }

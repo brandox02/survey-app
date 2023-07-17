@@ -1,44 +1,45 @@
 'use client';
 
-import CheckBox from "@/components/Checkbox";
-import SelectField from "@/components/Select";
 import TextField from "@/components/TextField";
 import { NotRequiredQuestionElement, QuestionElement } from "../../page";
+import CheckboxGroupManagementControl from "./CheckboxGroupManagementControl";
+import CommentManagementControl from "./CommentManagementControl";
+import RadioGroupManagementControl from "./RadioGroupManagementControl";
+import TextFieldManagementControl from "./TextFieldManagementControl";
 
-
-
-interface Props {
+export interface ManagementControlProps {
    selectedElement: QuestionElement
    setCurrentElement: (newElement: NotRequiredQuestionElement) => void
 }
 
-export default function ManagementControl({ selectedElement, setCurrentElement }: Props) {
-   function getTypeValue() {
-      const obj = {
-         text: { label: 'texto', 'value': 'text' },
-         number: { label: 'número', value: 'number' }
+export default function ManagementControl({ selectedElement, setCurrentElement }: ManagementControlProps) {
+   function getManagementControl() {
+      if (selectedElement) {
+         const props = { selectedElement, setCurrentElement }
+         const obj = {
+            text: <TextFieldManagementControl {...props} />,
+            comment: <CommentManagementControl {...props} />,
+            radiogroup: <RadioGroupManagementControl {...props} />,
+            checkbox: <CheckboxGroupManagementControl {...props} />,
+         }
+         return (obj as any)[selectedElement.type]
       }
-      return obj[selectedElement.inputType] || { label: '', value: '' }
    }
    return (
       <div className='border w-4/12 bg-white '>
          <div className='mt-5 font-bold text-lg text-center'>Configuración</div>
          <div className='mt-10 px-10'>
-            <TextField label="Titulo" value={selectedElement?.title} onChange={(event) => setCurrentElement({ title: event.target.value })} />
-            <TextField label="Nombre" value={selectedElement?.name} onChange={(event) => setCurrentElement({ name: event.target.value })} disabled={true} />
-            <SelectField
-               label='Tipo'
-               options={[{ label: 'texto', 'value': 'text' }, { label: 'número', value: 'number' }]}
-               value={getTypeValue()}
-               onChange={e => setCurrentElement({ inputType: e?.value })}
+            <TextField
+               label="Elemento"
+               value={selectedElement?.type} disabled onChange={() => { }}
             />
-            <div className="ml-2 mt-3">
-               <CheckBox
-                  checked={selectedElement.type === 'comment'}
-                  toggle={(checked) => setCurrentElement({ type: checked ? 'comment' : 'text' })}
-                  label={'Multi-Linea'}
-               />
-            </div>
+            <TextField
+               label="Titulo"
+               value={selectedElement?.title}
+               onChange={(event) => setCurrentElement({ title: event.target.value })}
+            />
+            {/* <TextField label="Nombre" value={selectedElement?.name} onChange={(event) => setCurrentElement({ name: event.target.value })} disabled={true} /> */}
+            {getManagementControl()}
          </div>
       </div>
    )

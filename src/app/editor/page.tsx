@@ -9,23 +9,54 @@ import { Draggable, Droppable, DragDropContext } from 'react-beautiful-dnd';
 import TextField from './accessories/Elements/TextField'
 import { useState } from 'react';
 import PreviewModal from './accessories/PreviewModal';
+import RadioGroup from './accessories/Elements/RadioGroup';
+import CheckboxGroup from './accessories/Elements/CheckboxGroup';
 
-
+type QuestionType = 'text' | 'comment' | 'radiogroup' | 'checkbox' | 'boolean'
 
 export type TextFieldQuestion = {
    name: string;
    title: string;
-   type: string;
-   inputType: 'text' | 'number'
+   type: QuestionType,
+   inputType: 'text' | 'number';
+   isRequired: boolean;
 }
 
-export type QuestionElement = TextFieldQuestion;
+export type RadioGroupQuestion = {
+   name: string;
+   title: string;
+   type: QuestionType;
+   isRequired: boolean;
+   choices: Array<{ text: string, value: string }>
+}
+
+export type CheckboxGroupQuestion = {
+   name: string;
+   title: string;
+   type: QuestionType;
+   isRequired: boolean;
+   choices: Array<{ text: string, value: string }>
+}
+export type BooleanQuestion = {
+   name: string;
+   title: string;
+   type: QuestionType;
+   isRequired: boolean;
+   labelTrue: string;
+   labelFalse: string;
+}
+
+export type QuestionElement = TextFieldQuestion | RadioGroupQuestion | CheckboxGroupQuestion | BooleanQuestion;
 
 export type NotRequiredQuestionElement = {
    name?: string;
    title?: string;
    type?: string;
    inputType?: 'text' | 'number'
+   choices?: Array<{ text: string, value: string }>;
+   isRequired?: boolean;
+   labelTrue?: string;
+   labelFalse?: string;
 }
 
 type ItemWrapper = {
@@ -35,53 +66,100 @@ type ItemWrapper = {
 }
 
 const ItemWrapper = ({ onClick, children, isSelected }: ItemWrapper) => (
-   <div onClick={onClick} className={`bg-white border-2  ${isSelected ? "border-emerald-400" : 'hover:border-orange-200 border-gray-200'}`}>
+   <div
+      onClick={onClick}
+      className={`bg-white border-2  ${isSelected ? "border-emerald-400" : 'hover:border-orange-200 border-gray-200'}`}
+   >
       {children}
    </div>
 )
 
 const initialQuestions: Array<QuestionElement> = [
+   // {
+   //    name: "Nombre",
+   //    title: "Introduce tu nombre:",
+   //    type: "text",
+   //    inputType: 'text',
+   //    isRequired: false
+
+   // },
+   // {
+   //    name: "apellido",
+   //    title: "Introduce tu apellido:",
+   //    type: "text",
+   //    inputType: 'text',
+   //    isRequired: false
+   // },
    {
-      name: "FirstName",
-      title: "Enter your first name:",
+      name: "edad",
+      title: "Introduce tu edad:",
       type: "text",
-      inputType: 'text'
-   }, {
-      name: "LastName",
-      title: "Enter your last name:",
-      type: "text",
-      inputType: 'text'
+      inputType: 'number',
+      isRequired: false
    },
    {
       name: "LastName",
       title: "Enter your last name:",
-      type: "text",
-      inputType: 'text'
+      type: "radiogroup",
+      choices: [
+         { text: 'modofoca', value: 'modofoca' },
+         { text: 'straight it up', value: 'straight it up' },
+      ],
+      isRequired: true
+   },
+   {
+      name: "LastName",
+      title: "Enter your last name:",
+      type: "checkbox",
+      choices: [
+         { text: 'modofoca', value: 'modofoca' },
+         { text: 'straight it up', value: 'straight it up' },
+      ],
+      isRequired: true
+   },
+   {
+      name: "LastName",
+      title: "Enter your last name:",
+      type: "radiogroup",
+      labelTrue: 'Sí',
+      labelFalse: 'No',
+      isRequired: true
    }
 ]
 
 export default function Editor() {
    const [questions, setQuestions] = useState(initialQuestions);
    const [selectedElementIndex, setSelectedElementIndex] = useState(-1);
-   const selectedElement: QuestionElement = (questions as any).at(selectedElementIndex);
-
+   const selectedElement: QuestionElement = (questions as any)[selectedElementIndex];
    const [isOpenPreviewModal, setIsOpenPreviewModal] = useState(false);
 
    function setCurrentElement(newElement: NotRequiredQuestionElement) {
-      setQuestions(questions => questions.map((question, index) => index === selectedElementIndex ? { ...selectedElement, ...newElement } : question))
+      if (selectedElement) {
+         setQuestions(questions => questions.map((question, index) => index === selectedElementIndex ? { ...selectedElement, ...newElement } : question))
+      }
    }
 
    function renderItem(question: QuestionElement, index: number) {
       const obj = {
          text: <TextField
-            value={questions.at(index)?.title || ''}
+            value={questions[index]?.title || ''}
             singleLine={true}
             onChange={e => setCurrentElement({ title: e.target.value })}
          />,
          comment: <TextField
-            value={questions.at(index)?.title || ''}
+            value={questions[index]?.title || ''}
             singleLine={false}
             onChange={e => setCurrentElement({ title: e.target.value })}
+         />,
+         radiogroup: <RadioGroup
+            value={questions[index]?.title || ''}
+            onChange={e => setCurrentElement({ title: e.target.value })}
+            choices={(questions[index] as RadioGroupQuestion).choices}
+         />,
+         checkbox: <CheckboxGroup
+            value={questions[index]?.title || ''}
+            onChange={e => setCurrentElement({ title: e.target.value })}
+            choices={(questions[index] as RadioGroupQuestion).choices}
          />,
       }
 
@@ -103,15 +181,14 @@ export default function Editor() {
    //    setQuestions(surveyElement => ({ ...surveyElement, elements: updatedQuestions }));
    // };
    // const [items, setItems] = useState([{ id: 1, name: 'a' }, { id: 2, name: 'b' }, { id: 3, name: 'c' }, { id: 4, name: 'd' }]);
-
    return (
       <div className=" h-full w-full">
          <TopBar onClickPreview={() => setIsOpenPreviewModal(true)} />
          <PreviewModal close={() => setIsOpenPreviewModal(false)} isOpen={isOpenPreviewModal} questions={questions} />
 
-         <div className='flex justify-between border relative bg-gray-100 h-full w-full'>
+         <div className='flex justify-between border relative bg-gray-100 h-full w-full overflow-auto'>
             <ItemsSideMenu />
-            <div className='w-6/12 p-10 flex flex-col gap-3'>
+            <div className='w-6/12 p-10 flex flex-col gap-3 '>
                {questions.map((question, index) => (
                   <ItemWrapper
                      key={question.name}

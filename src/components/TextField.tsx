@@ -13,7 +13,7 @@ export default function TextField({ label, onChange, value, disabled = false }: 
 
    return (
       <div className="p-2">
-         <label className="block mb-2 text-gray-600">{label}</label>
+         <label className="block mb-2 text-gray-600 font-medium">{label}</label>
          <input
             disabled={disabled}
             type="text"
