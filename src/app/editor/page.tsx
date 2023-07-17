@@ -69,21 +69,21 @@ const ItemWrapper = ({ onClick, children, isSelected }: ItemWrapper) => (
 )
 
 const initialQuestions: Array<QuestionElement> = [
-   // {
-   //    name: "Nombre",
-   //    title: "Introduce tu nombre:",
-   //    type: "text",
-   //    inputType: 'text',
-   //    isRequired: false
+   {
+      name: "Nombre",
+      title: "Introduce tu nombre:",
+      type: "text",
+      inputType: 'text',
+      isRequired: false
 
-   // },
-   // {
-   //    name: "apellido",
-   //    title: "Introduce tu apellido:",
-   //    type: "text",
-   //    inputType: 'text',
-   //    isRequired: false
-   // },
+   },
+   {
+      name: "apellido",
+      title: "Introduce tu apellido:",
+      type: "text",
+      inputType: 'text',
+      isRequired: false
+   },
    {
       name: "edad",
       title: "Introduce tu edad:",
@@ -118,7 +118,36 @@ const initialQuestions: Array<QuestionElement> = [
       labelTrue: 'Sí',
       labelFalse: 'No',
       isRequired: true
-   }
+   },
+   {
+      name: "dfdw",
+      title: "Enter your last name:",
+      type: "radiogroup",
+      choices: [
+         { text: 'modofoca22', value: 'modofeqwewqoca' },
+         { text: 'straight 22it up', value: 'straiewqeght it up' },
+      ],
+      isRequired: true
+   },
+   {
+      name: "dfdw",
+      title: "Enter your last name:",
+      type: "radiogroup",
+      choices: [
+         { text: 'modofoca22', value: 'modofeqwewqoca' },
+         { text: 'straight 22it up', value: 'straiewqeght it up' },
+      ],
+      isRequired: true
+   }, {
+      name: "dfdw",
+      title: "Enter your last name:",
+      type: "radiogroup",
+      choices: [
+         { text: 'modofoca22', value: 'modofeqwewqoca' },
+         { text: 'straight 22it up', value: 'straiewqeght it up' },
+      ],
+      isRequired: true
+   },
 ]
 
 export default function Editor() {
@@ -185,13 +214,13 @@ export default function Editor() {
    // };
    // const [items, setItems] = useState([{ id: 1, name: 'a' }, { id: 2, name: 'b' }, { id: 3, name: 'c' }, { id: 4, name: 'd' }]);
    return (
-      <div className=" h-full w-full">
+      <div className="h-full w-full relative overflow-hidden">
          <TopBar onClickPreview={() => setIsOpenPreviewModal(true)} />
          <PreviewModal close={() => setIsOpenPreviewModal(false)} isOpen={isOpenPreviewModal} questions={questions} />
 
-         <div className='flex justify-between border relative bg-gray-100 h-full w-full overflow-auto'>
+         <div className='flex justify-between border relative bg-gray-100 h-full w-full overflow-auto pb-20'>
             <ItemsSideMenu />
-            <div className='w-6/12 p-10 flex flex-col gap-3 '>
+            <div className='w-7/12 p-20 flex flex-col gap-3 overflow-auto'>
                {questions.map((question, index) => (
                   <ItemWrapper
                      key={question.name}

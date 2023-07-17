@@ -25,7 +25,7 @@ export default function RootLayout({
             <div className='w-80 h-screen'>
               <Menu />
             </div>
-            <div className='h-screen w-full'>
+            <div className='h-screen w-full overflow-auto'>
               {children}
             </div>
           </>
