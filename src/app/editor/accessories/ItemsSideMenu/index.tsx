@@ -4,7 +4,7 @@ import { BsCursorText, BsTextCenter, BsUiRadiosGrid } from 'react-icons/bs';
 import { GoCheckbox } from 'react-icons/go';
 import ItemSideMenu from './Item';
 import { VscSymbolBoolean } from 'react-icons/vsc';
-import { QuestionType } from '../../page';
+import { QuestionType } from '../../types';
 
 interface Props {
    onAddNewItem: (type: QuestionType) => void

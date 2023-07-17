@@ -3,7 +3,7 @@
 import CheckBox from "@/components/Checkbox";
 import SelectField from "@/components/Select";
 import { ManagementControlProps } from ".";
-import { TextFieldQuestion } from "../../page";
+import { TextFieldQuestion } from "../../types";
 
 
 

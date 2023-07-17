@@ -3,7 +3,7 @@
 import CheckBox from "@/components/Checkbox";
 import TextField from "@/components/TextField";
 import { ManagementControlProps } from ".";
-import { BooleanQuestion } from "../../page";
+import { BooleanQuestion } from "../../types";
 
 
 

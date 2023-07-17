@@ -2,7 +2,8 @@
 
 import Button from "@/components/Button";
 import TextField from "@/components/TextField";
-import { NotRequiredQuestionElement, QuestionElement } from "../../page";
+import { NotRequiredQuestionElement, QuestionElement } from "../../types";
+
 import BooleanManagementControl from "./BooleanManagementControl";
 import CheckboxGroupManagementControl from "./CheckboxGroupManagementControl";
 import CommentManagementControl from "./CommentManagementControl";
@@ -12,7 +13,7 @@ import TextFieldManagementControl from "./TextFieldManagementControl";
 export interface ManagementControlProps {
    selectedElement: QuestionElement
    setCurrentElement: (newElement: NotRequiredQuestionElement) => void
-   onDeleteCurrentElement: () => void
+   onDeleteCurrentElement?: () => void
 }
 
 export default function ManagementControl({ selectedElement, setCurrentElement, onDeleteCurrentElement }: ManagementControlProps) {

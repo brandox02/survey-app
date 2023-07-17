@@ -9,7 +9,7 @@ export default function CheckboxGroupManagementControl({ selectedElement, setCur
 
    return (
       <div className="">
-         <Choices {...{ selectedElement, setCurrentElement }} />
+         <Choices {...{ selectedElement, setCurrentElement, }} />
          <div className="ml-2 mt-5">
             <CheckBox
                checked={selectedElement.isRequired}
