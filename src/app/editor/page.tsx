@@ -14,62 +14,9 @@ import CheckboxGroup from './accessories/Elements/CheckboxGroup';
 import Boolean from './accessories/Elements/Boolean';
 import toast from 'react-hot-toast';
 import { v4 as uuid } from 'uuid';
+import { BooleanQuestion, NotRequiredQuestionElement, QuestionElement, QuestionType, RadioGroupQuestion } from './types';
+import ItemWrapper from './accessories/ItemWrapper';
 
-export type QuestionType = 'text' | 'comment' | 'radiogroup' | 'checkbox' | 'boolean'
-
-interface BaseQuestion {
-   name: string;
-   title: string;
-   type: QuestionType,
-   isRequired: boolean;
-}
-
-export interface TextFieldQuestion extends BaseQuestion {
-
-   inputType: 'text' | 'number';
-}
-
-export interface RadioGroupQuestion extends BaseQuestion {
-   choices: Array<{ text: string, value: string }>
-}
-
-export interface CheckboxGroupQuestion extends BaseQuestion {
-
-   choices: Array<{ text: string, value: string }>
-}
-export interface BooleanQuestion extends BaseQuestion {
-   labelTrue: string;
-   labelFalse: string;
-}
-
-export type QuestionElement = TextFieldQuestion | RadioGroupQuestion | CheckboxGroupQuestion | BooleanQuestion;
-
-export type NotRequiredQuestionElement = {
-   name?: string;
-   title?: string;
-   type?: string;
-   inputType?: 'text' | 'number'
-   choices?: Array<{ text: string, value: string }>;
-   isRequired?: boolean;
-   labelTrue?: string;
-   labelFalse?: string;
-}
-
-type ItemWrapper = {
-   onClick: () => void;
-   children: JSX.Element;
-   isSelected: boolean;
-}
-
-const ItemWrapper = ({ onClick, children, isSelected, ...restProps }: ItemWrapper) => (
-   <div
-      onClick={onClick}
-      className={`bg-white border-2 my-2 ${isSelected ? "border-emerald-400" : 'hover:border-orange-200 border-gray-200'}`}
-      {...restProps}
-   >
-      {children}
-   </div>
-)
 
 const initialQuestions: Array<QuestionElement> = [];
 
@@ -127,7 +74,6 @@ export default function Editor() {
    }
 
    const handleDragEnd = (result: any) => {
-      console.log('klk', result)
       if (!result.destination) return;
       const updatedQuestions = Array.from(questions);
       const [reorderedQuestion] = updatedQuestions.splice(result.source.index, 1);
@@ -194,7 +140,6 @@ export default function Editor() {
       setSelectedElementIndex(-1);
    }
 
-   // const [items, setItems] = useState([{ id: 1, name: 'a' }, { id: 2, name: 'b' }, { id: 3, name: 'c' }, { id: 4, name: 'd' }]);
    return (
       <div className="h-full w-full relative overflow-hidden">
          <TopBar onClickPreview={() => setIsOpenPreviewModal(true)} title={title} setTitle={setTitle} />

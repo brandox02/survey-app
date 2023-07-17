@@ -11,13 +11,13 @@ type Props = {
    questions: Array<QuestionElement>
 }
 export default function PreviewModal({ close, isOpen, questions }: Props) {
-   console.log({ questions })
    if (isOpen) {
       const surveyModel = new Model({ elements: questions });
 
       surveyModel.onComplete.add((data) => {
          console.log({ data: data.data })
-      })
+      });
+
       return (
          (
             <div className="">
