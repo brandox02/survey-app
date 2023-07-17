@@ -71,93 +71,14 @@ const ItemWrapper = ({ onClick, children, isSelected, ...restProps }: ItemWrappe
    </div>
 )
 
-const initialQuestions: Array<QuestionElement> = [
-   // {
-   //    name: "Nombr3efds",
-   //    title: "Introduce tu nombre:",
-   //    type: "text",
-   //    inputType: 'text',
-   //    isRequired: false
-
-   // },
-   // {
-   //    name: "dsfd5s",
-   //    title: "Introduce tu apellido:",
-   //    type: "text",
-   //    inputType: 'text',
-   //    isRequired: false
-   // },
-   // {
-   //    name: "edv4cxad",
-   //    title: "Introduce tu edad:",
-   //    type: "text",
-   //    inputType: 'number',
-   //    isRequired: false
-   // },
-   // {
-   //    name: "dv1cxfdw",
-   //    title: "Enter your last name:",
-   //    type: "radiogroup",
-   //    choices: [
-   //       { text: 'modofoca22', value: 'modofeqwewqoca' },
-   //       { text: 'straight 22it up', value: 'straiewqeght it up' },
-   //    ],
-   //    isRequired: true
-   // },
-   // {
-   //    name: "2vcxvcx",
-   //    title: "Enter your last name:",
-   //    type: "checkbox",
-   //    choices: [
-   //       { text: 'modof123oca', value: 'modoeqwewqfoca' },
-   //       { text: 'straight312 it up', value: 'straewqeqwight it up' },
-   //    ],
-   //    isRequired: true
-   // },
-   // {
-   //    name: "vcvx4",
-   //    title: "boolean:",
-   //    type: "boolean",
-   //    labelTrue: 'Sí',
-   //    labelFalse: 'No',
-   //    isRequired: true
-   // },
-   // {
-   //    name: "dfcxxxxxdw3",
-   //    title: "Enter your last name:",
-   //    type: "radiogroup",
-   //    choices: [
-   //       { text: 'modofoca22', value: 'modofeqwewqoca' },
-   //       { text: 'straight 22it up', value: 'straiewqeght it up' },
-   //    ],
-   //    isRequired: true
-   // },
-   // {
-   //    name: "xxcx1",
-   //    title: "Enter your last name:",
-   //    type: "radiogroup",
-   //    choices: [
-   //       { text: 'modofoca22', value: 'modofeqwewqoca' },
-   //       { text: 'straight 22it up', value: 'straiewqeght it up' },
-   //    ],
-   //    isRequired: true
-   // }, {
-   //    name: "dfxacidw2",
-   //    title: "Enter your last name:",
-   //    type: "radiogroup",
-   //    choices: [
-   //       { text: 'modofoca22', value: 'modofeqwewqoca' },
-   //       { text: 'straight 22it up', value: 'straiewqeght it up' },
-   //    ],
-   //    isRequired: true
-   // },
-]
+const initialQuestions: Array<QuestionElement> = [];
 
 export default function Editor() {
    const [questions, setQuestions] = useState(initialQuestions);
    const [selectedElementIndex, setSelectedElementIndex] = useState(-1);
    const selectedElement: QuestionElement = (questions as any)[selectedElementIndex];
    const [isOpenPreviewModal, setIsOpenPreviewModal] = useState(false);
+   const [title, setTitle] = useState(`Nueva Encuesta ${uuid()}`);
 
    function setCurrentElement(newElement: NotRequiredQuestionElement) {
       if (selectedElement) {
@@ -237,20 +158,14 @@ export default function Editor() {
             name: id,
             title: `Radio Group Field`,
             type: "radiogroup",
-            choices: [
-               { text: 'modofoca22', value: 'modofeqwewqoca' },
-               { text: 'straight 22it up', value: 'straiewqeght it up' },
-            ],
+            choices: [],
             isRequired: true
          },
          'checkbox': {
             name: id,
             title: `Checkbox Field`,
             type: "checkbox",
-            choices: [
-               { text: 'modof123oca', value: 'modoeqwewqfoca' },
-               { text: 'straight312 it up', value: 'straewqeqwight it up' },
-            ],
+            choices: [],
             isRequired: true
          },
          'boolean': {
@@ -282,7 +197,7 @@ export default function Editor() {
    // const [items, setItems] = useState([{ id: 1, name: 'a' }, { id: 2, name: 'b' }, { id: 3, name: 'c' }, { id: 4, name: 'd' }]);
    return (
       <div className="h-full w-full relative overflow-hidden">
-         <TopBar onClickPreview={() => setIsOpenPreviewModal(true)} />
+         <TopBar onClickPreview={() => setIsOpenPreviewModal(true)} title={title} setTitle={setTitle} />
          <PreviewModal close={() => setIsOpenPreviewModal(false)} isOpen={isOpenPreviewModal} questions={questions} />
 
          <div className='flex justify-between border relative bg-gray-100 h-full w-full overflow-auto pb-20'>

@@ -20,9 +20,9 @@ export default function Boolean({ onChange, value, falseLabel, trueLabel }: Text
          </div>
          <div className="bg-[#F9F9F9] border border-gray-200 rounded-3xl flex items-center p-1 cursor-default w-fit">
             <div className="bg-white px-7 rounded-full py-1 shadow text-emerald-700">
-               {trueLabel}
+               {falseLabel}
             </div>
-            <span className="text-gray-400 px-5">{falseLabel}</span>
+            <span className="text-gray-400 px-5">{trueLabel}</span>
          </div>
       </div>
 

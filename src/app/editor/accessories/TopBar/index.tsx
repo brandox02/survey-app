@@ -7,16 +7,18 @@ import { GrEdit } from 'react-icons/gr';
 
 type Props = {
    onClickPreview: () => void;
+   title: string;
+   setTitle: (title: string) => void;
 }
 
-export default function TopBar({ onClickPreview }: Props) {
+export default function TopBar({ onClickPreview, setTitle, title }: Props) {
 
 
    return (
-      <div className=" border border-gray-300 bg-white py-5 flex justify-between items-center">
-         <div className="flex items-center gap-2">
+      <div className=" border border-gray-300 bg-white py-5 flex items-center justify-between">
+         <div className="flex items-center gap-2 w-full mr-5">
             <GrEdit className="ml-5" />
-            <span className="font-bold text-xl text-emerald-700">Covid 19 Survey</span>
+            <input className="font-bold text-xl w-full text-emerald-700 outline-none hover:border-gray-400 hover:border rounded-lg px-1 py-1" value={title} onChange={e => setTitle(e.target.value)} />
          </div>
          <div className="flex">
             <div data-modal-target="defaultModal" data-modal-toggle="defaultModal">
