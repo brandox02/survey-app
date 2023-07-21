@@ -1,7 +1,7 @@
 'use client';
 
-import Button from "@/components/Button";
 import TextField from "@/components/TextField";
+import { Button } from "@mantine/core";
 import { NotRequiredQuestionElement, QuestionElement } from "../../types";
 
 import BooleanManagementControl from "./BooleanManagementControl";
@@ -47,7 +47,9 @@ export default function ManagementControl({ selectedElement, setCurrentElement, 
             />
             {getManagementControl()}
             <Button
-               text="Eliminar este elemento" classname="w-full mt-5" onClick={onDeleteCurrentElement} />
+               className="mt-20" onClick={onDeleteCurrentElement} color='red' fullWidth>
+               Eliminar este elemento
+            </Button>
          </div>
       </div>
    )

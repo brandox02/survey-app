@@ -13,7 +13,8 @@ import { useRouter } from 'next/navigation';
 export default function Login() {
    const [email, setEmail] = useState('');
    const [password, setPassword] = useState('');
-   const [loginMutation, { loading }] = useMutation(gql`
+   const [loadingLogin, setLoadingLogin] = useState(false);
+   const [loginMutation] = useMutation(gql`
          mutation Login($email: String!, $password: String!) {
             login(email: $email, password: $password) {
                accessToken
@@ -32,13 +33,14 @@ export default function Login() {
    const router = useRouter();
 
    const onLogin = manageGraphqlError(async () => {
+      setLoadingLogin(true)
       if (!password.trim() || !email.trim()) {
          toast.error('Debes completar la contraseña y el correo');
          return;
       }
       const { data } = await loginMutation({ variables: { email, password } });
       Cookie.set('auth', JSON.stringify(data.login));
-      router.replace('/backoffice/editor');
+      router.replace('/backoffice/surveys');
       // setAuthToken(data.accessToken);
 
    }, { 'Resource not found': 'Usuario o contraseña inválidos' });
@@ -66,7 +68,7 @@ export default function Login() {
                         onChange={(e) => setPassword(e.target.value)}
                         value={password}
                      />
-                     <Button onClick={onLogin} variant={'filled'} className='mt-5' loading={loading}>Ingresar</Button>
+                     <Button onClick={onLogin} variant={'filled'} className='mt-5' loading={loadingLogin}>Ingresar</Button>
                   </div>
                </div>
             </div>

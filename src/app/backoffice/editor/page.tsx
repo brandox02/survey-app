@@ -141,10 +141,15 @@ export default function Editor() {
 
    return (
       <div className="h-full w-full relative overflow-hidden">
-         <TopBar onClickPreview={() => setIsOpenPreviewModal(true)} title={title} setTitle={setTitle} />
+         <TopBar
+            questions={questions}
+            onClickPreview={() => setIsOpenPreviewModal(true)}
+            title={title}
+            setTitle={setTitle}
+         />
          <PreviewModal close={() => setIsOpenPreviewModal(false)} isOpen={isOpenPreviewModal} questions={questions} />
 
-         <div className='flex justify-between border relative bg-gray-100 h-full w-full overflow-auto pb-20'>
+         <div className='flex justify-between relative bg-gray-100 h-full w-full overflow-auto pb-20'>
             <ItemsSideMenu onAddNewItem={addNewElement} />
             <div className='w-7/12 p-20 flex flex-col gap-3 overflow-auto'>
                <DragDropContext onDragEnd={handleDragEnd}>
