@@ -1,11 +1,11 @@
 'use client';
 
-import { ManagementControlProps } from '@/app/editor/accessories/ManagementControl';
-import { RadioGroupQuestion } from '@/app/editor/page';
+import { ManagementControlProps } from '@/app/backoffice/editor/accessories/ManagementControl';
 import { useState } from 'react';
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 import { RxDragHandleDots2 } from 'react-icons/rx';
 import { GrAddCircle } from 'react-icons/gr'
+import { CheckboxGroupQuestion, RadioGroupQuestion } from '@/app/backoffice/editor/types';
 
 
 interface Props extends ManagementControlProps {
@@ -14,7 +14,7 @@ interface Props extends ManagementControlProps {
 
 export default function Choices({ selectedElement, setCurrentElement, label = 'Opciones' }: Props) {
    const [input, setInput] = useState('')
-   const tSelectedElement = selectedElement as RadioGroupQuestion;
+   const tSelectedElement = selectedElement as RadioGroupQuestion | CheckboxGroupQuestion;
 
    const handleDragEnd = (result: any) => {
       if (!result.destination) return;

@@ -18,10 +18,7 @@ export interface RadioGroupQuestion extends BaseQuestion {
    choices: Array<{ text: string, value: string }>
 }
 
-export interface CheckboxGroupQuestion extends BaseQuestion {
-
-   choices: Array<{ text: string, value: string }>
-}
+export interface CheckboxGroupQuestion extends RadioGroupQuestion {}
 export interface BooleanQuestion extends BaseQuestion {
    labelTrue: string;
    labelFalse: string;

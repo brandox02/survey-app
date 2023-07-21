@@ -1,8 +1,17 @@
 'use client';
 import MenuItem from './MenuItem';
 import { menuItems } from '@/config/menuItemsConf';
+import { FiLogOut } from 'react-icons/fi';
+import Cookie from 'js-cookie';
+import { useRouter } from 'next/navigation';
 
 export default function Menu() {
+   const router = useRouter();
+
+   function onLogout() {
+      Cookie.remove('auth');
+      router.replace('/login');
+   }
 
    return <div
       className='text-white font-medium flex flex-col items-center h-full bg-emerald-600 p-5 shadow'
@@ -10,6 +19,9 @@ export default function Menu() {
       {/* <Image src={YoCreoEnTi} alt={'Yo creo en ti'} className={'my-5'} width={180} />
       <Image src={MenuGirl} alt={'Menu Girl'} className={''} /> */}
       <span className='mt-5 text-2xl font-bold text-gray-100'>Encuesta App</span>
+
+      <FiLogOut className='mt-3 cursor-pointer' size={25} onClick={onLogout} />
+
       <div className=' mt-10'>
          {menuItems.map(({ icon, label, to }, index) => (
             <MenuItem key={index} label={label} icon={icon} to={to} />

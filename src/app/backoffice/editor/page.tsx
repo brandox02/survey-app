@@ -1,6 +1,5 @@
 'use client';
 
-
 import 'survey-core/defaultV2.min.css';
 import ItemsSideMenu from './accessories/ItemsSideMenu';
 import ManagementControl from './accessories/ManagementControl';
@@ -14,9 +13,8 @@ import CheckboxGroup from './accessories/Elements/CheckboxGroup';
 import Boolean from './accessories/Elements/Boolean';
 import toast from 'react-hot-toast';
 import { v4 as uuid } from 'uuid';
-import { BooleanQuestion, NotRequiredQuestionElement, QuestionElement, QuestionType, RadioGroupQuestion } from './types';
+import { BooleanQuestion, CheckboxGroupQuestion, NotRequiredQuestionElement, QuestionElement, QuestionType, RadioGroupQuestion } from './types';
 import ItemWrapper from './accessories/ItemWrapper';
-
 
 const initialQuestions: Array<QuestionElement> = [];
 
@@ -30,7 +28,7 @@ export default function Editor() {
    function setCurrentElement(newElement: NotRequiredQuestionElement) {
       if (selectedElement) {
          setQuestions(questions => questions.map((question, index) => {
-            const mixed = { ...selectedElement, ...newElement } as QuestionElement;
+            let mixed = { ...selectedElement, ...newElement } as QuestionElement;
             return index === selectedElementIndex ? mixed : question
          }))
       }
@@ -56,7 +54,7 @@ export default function Editor() {
          checkbox: <CheckboxGroup
             value={questions[index]?.title || ''}
             onChange={e => setCurrentElement({ title: e.target.value })}
-            choices={(questions[index] as RadioGroupQuestion).choices}
+            choices={(questions[index] as CheckboxGroupQuestion).choices}
          />,
          boolean: <Boolean
             value={questions[index]?.title || ''}
@@ -125,6 +123,7 @@ export default function Editor() {
       }
 
       let newItem = (obj as any)[type];
+      // newItem.name = convertToSlug(`${newItem.title}${newItem.name}`);
 
       if (!newItem) {
          toast.error('No se pudo agregar el elemento');

@@ -38,16 +38,16 @@ export default function ManagementControl({ selectedElement, setCurrentElement, 
                label="Elemento"
                value={selectedElement?.type || ''} disabled onChange={() => { }}
             />
+
+            <TextField label="Nombre" value={selectedElement?.name || ''} onChange={(event) => setCurrentElement({ name: event.target.value })} disabled />
             <TextField
                label="Titulo"
                value={selectedElement?.title || ''}
                onChange={(event) => setCurrentElement({ title: event.target.value })}
             />
-            <TextField label="Nombre" value={selectedElement?.name || ''} onChange={(event) => setCurrentElement({ name: event.target.value })} disabled={true} />
             {getManagementControl()}
-
-
-            <Button text="Eliminar este elemento" color="blue" classname="w-full mt-5" onClick={onDeleteCurrentElement} />
+            <Button
+               text="Eliminar este elemento" classname="w-full mt-5" onClick={onDeleteCurrentElement} />
          </div>
       </div>
    )
