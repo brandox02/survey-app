@@ -1,11 +1,11 @@
 'use client';
 
-import { ManagementControlProps } from '@/app/backoffice/editor/accessories/ManagementControl';
+import { ManagementControlProps } from '@/app/backoffice/surveys/editor/[id]/accessories/ManagementControl';
 import { useState } from 'react';
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 import { RxDragHandleDots2 } from 'react-icons/rx';
 import { GrAddCircle } from 'react-icons/gr'
-import { CheckboxGroupQuestion, RadioGroupQuestion } from '@/app/backoffice/editor/types';
+import { CheckboxGroupQuestion, RadioGroupQuestion } from '@/app/backoffice/surveys/editor/[id]/types';
 
 
 interface Props extends ManagementControlProps {

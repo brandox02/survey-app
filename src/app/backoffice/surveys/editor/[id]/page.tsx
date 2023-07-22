@@ -1,12 +1,11 @@
 'use client';
 
-import 'survey-core/defaultV2.min.css';
 import ItemsSideMenu from './accessories/ItemsSideMenu';
 import ManagementControl from './accessories/ManagementControl';
 import TopBar from './accessories/TopBar';
 import { Draggable, Droppable, DragDropContext } from 'react-beautiful-dnd';
 import TextField from './accessories/Elements/TextField'
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import PreviewModal from './accessories/PreviewModal';
 import RadioGroup from './accessories/Elements/RadioGroup';
 import CheckboxGroup from './accessories/Elements/CheckboxGroup';
@@ -15,10 +14,33 @@ import toast from 'react-hot-toast';
 import { v4 as uuid } from 'uuid';
 import { BooleanQuestion, CheckboxGroupQuestion, NotRequiredQuestionElement, QuestionElement, QuestionType, RadioGroupQuestion } from './types';
 import ItemWrapper from './accessories/ItemWrapper';
+import { gql, useQuery } from '@apollo/client';
+import Loader from '@/components/Loader';
+import { useParams } from 'next/navigation';
 
 const initialQuestions: Array<QuestionElement> = [];
 
 export default function Editor() {
+   const { id } = useParams();
+   const editing = id !== 'new';
+   const { data, loading } = useQuery(gql`
+      query Survey($where: WhereSurveyInput!) {
+         survey(where: $where) {
+            user {
+               password
+               lastname
+               email
+            }
+            title
+            id
+            content
+         }
+      }
+   `, {
+      variables: { where: { id: parseInt(id) } },
+      fetchPolicy: 'cache-and-network'
+   });
+
    const [questions, setQuestions] = useState(initialQuestions);
    const [selectedElementIndex, setSelectedElementIndex] = useState(-1);
    const selectedElement: QuestionElement = (questions as any)[selectedElementIndex];
@@ -139,6 +161,17 @@ export default function Editor() {
       setSelectedElementIndex(-1);
    }
 
+   useEffect(() => {
+      if (editing && data) {
+         setTitle(data.survey.title);
+         setQuestions(data.survey.content);
+      }
+   }, [data, editing])
+
+   if (loading) {
+      return <Loader />
+   }
+
    return (
       <div className="h-full w-full relative overflow-hidden">
          <TopBar
@@ -146,6 +179,8 @@ export default function Editor() {
             onClickPreview={() => setIsOpenPreviewModal(true)}
             title={title}
             setTitle={setTitle}
+            isEditing={editing}
+            id={parseInt(id)}
          />
          <PreviewModal close={() => setIsOpenPreviewModal(false)} isOpen={isOpenPreviewModal} questions={questions} />
 

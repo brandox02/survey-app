@@ -3,36 +3,27 @@
 import { useState } from 'react';
 import { Button, Menu, Table, Title } from '@mantine/core';
 import { gql, useQuery } from '@apollo/client';
-import { Survey } from '@/type';
 import Loader from '@/components/Loader';
 import Link from 'next/link';
 
-export default function Surveys() {
+export default function Answers() {
    const [page, setPage] = useState(0);
    const [loadingGoToAnotherPage, setLoadingGoToAnotherPage] = useState(false);
 
    const { data: response, loading } = useQuery(gql`
-      query Surveys($where: WhereSurveyInput!, $page: Float!) {
-         data: surveys(where: $where, page: $page) {
+      query Answers($where: WhereAnswerInput!, $page: Float!) {
+         data: answers(where: $where, page: $page) {
             metadata {
                totalPages
                totalItems
                perPage
             }
             items {
+               surveyId
                id
                content
-               answers {
-               id
-               content
-               }
-               title
-               user {
-                  id
-                  firstname
-                  lastname
-                  email
-               }
+               respondentFullname
+               respondentEmail
             }
          }
          }
@@ -45,11 +36,11 @@ export default function Surveys() {
       return <Loader />
    }
 
-   const surveys: Array<Survey> = response?.data?.items || [];
+   const surveys: Array<any> = response?.data?.items || [];
    const rows = surveys.map((element) => (
       <tr key={element.id}>
-         <td>{element.title}</td>
-         <td>{`${element.user.firstname} ${element.user.lastname}`}</td>
+         <td>{element.respondentFullname || "sin nombre"}</td>
+         <td>{element.respondentEmail || 'Sin email'}</td>
          <td className=''>
             <Menu shadow="md" >
                <Menu.Target>
@@ -57,9 +48,8 @@ export default function Surveys() {
                </Menu.Target>
                <Menu.Dropdown className=''>
                   <Link href={`/backoffice/surveys/editor/${element.id}`}>
-                     <Menu.Item className=''>Editar</Menu.Item>
+                     <Menu.Item className=''>Detalle</Menu.Item>
                   </Link>
-                  <Menu.Item className=''>Ver Respuestas</Menu.Item>
                </Menu.Dropdown>
             </Menu>
          </td>
@@ -71,22 +61,15 @@ export default function Surveys() {
       <div className='p-10'>
 
          <div className='flex justify-between'>
-            <Title order={2}>Encuestas</Title>
-            <Link href={'/backoffice/surveys/editor/new'} onClick={() => setLoadingGoToAnotherPage(true)}>
-               <Button
-                  loading={loadingGoToAnotherPage}
-                  variant={'light'}
-               >
-                  Agregar Nueva Encuesta
-               </Button>
-            </Link>
+            <Title order={2}>Respuestas</Title>
+
          </div>
 
          <Table className='mt-10' striped withBorder>
             <thead>
                <tr>
-                  <th>Titulo</th>
-                  <th>Usuario Creador</th>
+                  <th>Nombre Completo Persona</th>
+                  <th>Email Persona</th>
                   <th></th>
                </tr>
             </thead>

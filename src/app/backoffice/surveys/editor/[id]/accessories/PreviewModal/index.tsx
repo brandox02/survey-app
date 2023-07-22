@@ -3,6 +3,8 @@
 import { Survey } from 'survey-react-ui';
 import { Model } from 'survey-core';
 import { QuestionElement } from '../../types';
+import 'survey-core/defaultV2.min.css';
+// import { Modal } from '@mantine/core';
 
 
 type Props = {
@@ -68,6 +70,9 @@ export default function PreviewModal({ close, isOpen, questions }: Props) {
             </div>
             <div className="opacity-25 fixed inset-0 z-40 bg-black"></div>
          </div>
+         // <Modal opened={isOpen} onClose={close} title="Previsualización Encuesta">
+         //    <Survey model={surveyModel} />
+         // </Modal>
       )
 
    }
