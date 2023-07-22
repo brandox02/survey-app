@@ -64,7 +64,7 @@ export default function TopBar({ onClickPreview, setTitle, title, questions, id,
          </Anchor>
       </Link>
    ));
-   console.log({ id })
+
    return (
       <div className="border border-gray-300  py-3 flex items-center justify-between">
          <div className="flex items-center gap-2 w-9/12 mr-5">

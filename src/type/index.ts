@@ -22,6 +22,7 @@ export type Pagination<T> = {
 }
 
 export type Survey = {
+   enabled: boolean;
    id: number
    content: Array<any>,
    answers: Array<any>,
