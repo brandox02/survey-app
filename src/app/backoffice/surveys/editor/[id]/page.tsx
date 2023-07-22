@@ -16,13 +16,13 @@ import { BooleanQuestion, CheckboxGroupQuestion, NotRequiredQuestionElement, Que
 import ItemWrapper from './accessories/ItemWrapper';
 import { gql, useQuery } from '@apollo/client';
 import Loader from '@/components/Loader';
-import { useParams } from 'next/navigation';
+import { useParams, useSearchParams } from 'next/navigation';
 
 const initialQuestions: Array<QuestionElement> = [];
 
 export default function Editor() {
    const { id } = useParams();
-   const editing = id !== 'new';
+   const searchParams = useSearchParams();
    const { data, loading } = useQuery(gql`
       query Survey($where: WhereSurveyInput!) {
          survey(where: $where) {
@@ -162,11 +162,13 @@ export default function Editor() {
    }
 
    useEffect(() => {
+      const editing = id !== 'new';
       if (editing && data) {
-         setTitle(data.survey.title);
+         setTitle(`${data.survey.title} - ${uuid()}`);
          setQuestions(data.survey.content);
       }
-   }, [data, editing])
+      // eslint-disable-next-line
+   }, [data])
 
    if (loading) {
       return <Loader />
@@ -179,12 +181,12 @@ export default function Editor() {
             onClickPreview={() => setIsOpenPreviewModal(true)}
             title={title}
             setTitle={setTitle}
-            isEditing={editing}
             id={parseInt(id)}
+            readonly={!!searchParams.get('readonly')}
          />
          <PreviewModal close={() => setIsOpenPreviewModal(false)} isOpen={isOpenPreviewModal} questions={questions} />
 
-         <div className='flex justify-between relative bg-gray-100 h-full w-full overflow-auto pb-20'>
+         <div className='flex justify-between relative bg-gray-50 h-full w-full overflow-auto pb-20'>
             <ItemsSideMenu onAddNewItem={addNewElement} />
             <div className='w-7/12 p-20 flex flex-col gap-3 overflow-auto'>
                <DragDropContext onDragEnd={handleDragEnd}>

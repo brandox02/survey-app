@@ -1,11 +1,13 @@
 'use client';
 
 import { useState } from 'react';
-import { Button, Menu, Table, Title } from '@mantine/core';
+import { Button, CopyButton, Menu, Table, Title } from '@mantine/core';
 import { gql, useQuery } from '@apollo/client';
 import { Survey } from '@/type';
 import Loader from '@/components/Loader';
 import Link from 'next/link';
+import { AiOutlineCheck } from 'react-icons/ai';
+import { FaRegCopy } from 'react-icons/fa';
 
 export default function Surveys() {
    const [page, setPage] = useState(0);
@@ -50,18 +52,30 @@ export default function Surveys() {
       <tr key={element.id}>
          <td>{element.title}</td>
          <td>{`${element.user.firstname} ${element.user.lastname}`}</td>
-         <td className=''>
+         <td className='flex gap-1'>
             <Menu shadow="md" >
                <Menu.Target>
                   <Button>Opciones</Button>
                </Menu.Target>
                <Menu.Dropdown className=''>
-                  <Link href={`/backoffice/surveys/editor/${element.id}`}>
-                     <Menu.Item className=''>Editar</Menu.Item>
+                  <Link href={`/backoffice/surveys/editor/${element.id}?readonly=true`}>
+                     <Menu.Item className=''>Ver</Menu.Item>
                   </Link>
-                  <Menu.Item className=''>Ver Respuestas</Menu.Item>
+                  <Link href={`/backoffice/surveys/editor/${element.id}`}>
+                     <Menu.Item className=''>Crear Nueva a Partir de esta</Menu.Item>
+                  </Link>
+                  <Link href={`/backoffice/answers?surveyId=${element.id}`}>
+                     <Menu.Item className=''>Ver Respuestas</Menu.Item>
+                  </Link>
                </Menu.Dropdown>
             </Menu>
+            <CopyButton value={`${window.location.origin}/survey/${element.id}`} timeout={2500}>
+               {({ copied, copy }) => (
+                  <Button color={copied ? 'green' : 'teal'} onClick={copy} leftIcon={copied ? <AiOutlineCheck /> : <FaRegCopy />}>
+                     {copied ? 'Url Copiada' : 'Copiar URL'}
+                  </Button>
+               )}
+            </CopyButton>
          </td>
       </tr>
    ));

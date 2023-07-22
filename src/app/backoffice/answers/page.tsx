@@ -1,14 +1,19 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Button, Menu, Table, Title } from '@mantine/core';
 import { gql, useQuery } from '@apollo/client';
 import Loader from '@/components/Loader';
 import Link from 'next/link';
+import SelectField from "@/components/Select";
+import { useSearchParams } from 'next/navigation';
+
 
 export default function Answers() {
+   const searchParams = useSearchParams();
    const [page, setPage] = useState(0);
-   const [loadingGoToAnotherPage, setLoadingGoToAnotherPage] = useState(false);
+   const [surveySelected, setSurveySelected] = useState({ label: '', value: '' });
+   const surveyId = searchParams.get('surveyId')
 
    const { data: response, loading } = useQuery(gql`
       query Answers($where: WhereAnswerInput!, $page: Float!) {
@@ -19,7 +24,13 @@ export default function Answers() {
                perPage
             }
             items {
-               surveyId
+               survey{
+                  title
+                  user {
+                     firstname
+                     lastname
+                  }
+               }
                id
                content
                respondentFullname
@@ -28,17 +39,27 @@ export default function Answers() {
          }
          }
    `, {
-      variables: { where: {}, page },
+      variables: { where: { surveyId: surveySelected?.value || null }, page },
       fetchPolicy: 'cache-and-network',
    });
 
-   if (loading) {
-      return <Loader />
+   const { data: surveyResponse, loading: surveyListLoading } = useQuery(gql`
+   query SurveyList{
+      surveyList {
+         id
+         title
+      }
    }
+   `, { fetchPolicy: 'cache-and-network' });
 
-   const surveys: Array<any> = response?.data?.items || [];
-   const rows = surveys.map((element) => (
+   const surveyList = surveyResponse?.surveyList || [];
+
+
+   const answers: Array<any> = response?.data?.items || [];
+   const rows = answers.map((element) => (
       <tr key={element.id}>
+         <td>{element.survey.title}</td>
+         <td>{`${element.survey.user.firstname} ${element.survey.user.lastname}`}</td>
          <td>{element.respondentFullname || "sin nombre"}</td>
          <td>{element.respondentEmail || 'Sin email'}</td>
          <td className=''>
@@ -47,7 +68,7 @@ export default function Answers() {
                   <Button>Opciones</Button>
                </Menu.Target>
                <Menu.Dropdown className=''>
-                  <Link href={`/backoffice/surveys/editor/${element.id}`}>
+                  <Link href={`/backoffice/answers/${element.id}`}>
                      <Menu.Item className=''>Detalle</Menu.Item>
                   </Link>
                </Menu.Dropdown>
@@ -56,25 +77,38 @@ export default function Answers() {
       </tr>
    ));
 
+   useEffect(() => {
+      if (surveyId && surveyResponse) {
+         const surveySelected = surveyList.find((item: any) => item.id === parseInt(surveyId));
+         if (surveySelected) {
+            setSurveySelected({ label: surveySelected.title, value: surveySelected.id });
+         }
+      }
+      // eslint-disable-next-line
+   }, [surveyId, surveyResponse])
 
    return (
       <div className='p-10'>
 
-         <div className='flex justify-between'>
+         <div className='flex justify-between mb-5'>
             <Title order={2}>Respuestas</Title>
 
          </div>
-
-         <Table className='mt-10' striped withBorder>
-            <thead>
-               <tr>
-                  <th>Nombre Completo Persona</th>
-                  <th>Email Persona</th>
-                  <th></th>
-               </tr>
-            </thead>
-            <tbody>{rows}</tbody>
-         </Table>
+         {/* <Title className='pt-10 pb-2' order={5}>Filtrar por Encuesta:</Title> */}
+         <SelectField label='Filtrar por Encuesta:' value={surveySelected} onChange={(e: any) => setSurveySelected(e)} options={surveyList.map((item: any) => ({ label: item.title, value: item.id }))} isLoading={surveyListLoading} />
+         {loading ? <Loader /> : (
+            <Table className='mt-10' striped withBorder>
+               <thead>
+                  <tr>
+                     <th>Nombre Encuesta</th>
+                     <th>Creador de Encuesta</th>
+                     <th>Nombre Completo Persona</th>
+                     <th>Email Persona</th>
+                  </tr>
+               </thead>
+               <tbody>{rows}</tbody>
+            </Table>
+         )}
       </div>
    )
 }
