@@ -43,7 +43,11 @@ export default function Login() {
       router.replace('/backoffice/surveys');
       // setAuthToken(data.accessToken);
 
-   }, { 'Resource not found': 'Usuario o contraseña inválidos' });
+   }, { 'Resource not found': 'Usuario o contraseña inválidos' }, {
+      errorCallback: () => {
+         setLoadingLogin(false);
+      }
+   });
 
    return (
       <div className="bg-[#F1F6FF] w-screen h-screen">
