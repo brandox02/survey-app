@@ -27,7 +27,7 @@ export default function Survey() {
          }
       }
    `, {
-      variables: { where: { id: parseInt(id) } },
+      variables: { where: { id: parseInt(id), enabled: true } },
       fetchPolicy: 'cache-and-network'
    });
 
@@ -114,12 +114,21 @@ export default function Survey() {
          <Title className='pt-10'>{title}</Title>
          {submitted ? <Title order={2} className='p-10 text-gray-500'>Haz llenado la encuesta exitosamente!</Title> : (
             <>
-               <div className='bg-gray-50 p-10 shadow-md w-2/5 flex gap-5 justify-between mt-10 items-end'>
-                  <div className='flex'>
-                     <TextField label='Nombre Completo' value={fullname} onChange={e => setFullname(e.target.value)} />
+               <div className='bg-white p-10 shadow-md flex flex-col gap-5 w-full md:w-3/5 justify-between mt-10'>
+                  <Title order={4} color='blue' className=''>Información Personal</Title>
+                  <div className='flex flex-col w-full gap-0'>
+
+                     <TextField label='Nombre Completo' value={fullname} onChange={e => setFullname(e.target.value)} className='w-full' />
                      <TextField label='Email' value={email} onChange={e => setEmail(e.target.value)} />
+
+                     <Button
+                        className='mt-5'
+                        variant={'light'}
+                        color={unlockForm ? 'green' : 'blue'}
+                        leftIcon={unlockForm ? <AiOutlineCheck /> : ''}
+                        onClick={onUnlockForm}
+                     >{unlockForm ? 'Información Completada' : 'Seguir'}</Button>
                   </div>
-                  <Button variant={'light'} color={unlockForm ? 'green' : 'blue'} leftIcon={unlockForm ? <AiOutlineCheck /> : ''} onClick={onUnlockForm}>{unlockForm ? 'Completado' : 'Seguir'}</Button>
                </div>
 
                {unlockForm && <SurveyRender model={surveyModel} />}

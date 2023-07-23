@@ -4,15 +4,16 @@ import { ChangeEvent } from "react";
 
 type Props = {
    label: string;
-   value: string;
+   value: any;
    onChange: (event: ChangeEvent<HTMLInputElement>) => void;
    disabled?: boolean;
+   className?: string;
 }
 
-export default function TextField({ label, onChange, value, disabled = false }: Props) {
+export default function TextField({ label, onChange, value, disabled = false, className = '' }: Props) {
 
    return (
-      <div className="p-2">
+      <div className={`p-2 ${className}`}>
          <label className="block mb-2 text-gray-600 font-medium">{label}</label>
          <input
             disabled={disabled}

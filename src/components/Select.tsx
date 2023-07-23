@@ -9,9 +9,10 @@ type Props = {
    value: Item
    onChange: (x: SingleValue<Item>) => void
    isLoading?: boolean;
+   placeholder?: string;
 }
 
-export default function SelectField({ label, options, value, onChange, isLoading = false }: Props) {
+export default function SelectField({ label, options, value, onChange, isLoading = false, placeholder = 'Selecciona' }: Props) {
    return (
       <div className="p-2">
          <label className="block mb-2 text-gray-600">{label}</label>
@@ -21,6 +22,7 @@ export default function SelectField({ label, options, value, onChange, isLoading
             onChange={onChange}
             isLoading={isLoading}
             isClearable
+            placeholder={placeholder}
          />
       </div>
    )
