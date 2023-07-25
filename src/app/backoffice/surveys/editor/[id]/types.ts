@@ -1,6 +1,6 @@
 
 
-export type QuestionType = 'text' | 'comment' | 'radiogroup' | 'checkbox' | 'boolean'
+export type QuestionType = 'text' | 'comment' | 'radiogroup' | 'checkbox' | 'boolean' | 'imagepicker';
 
 interface BaseQuestion {
    name: string;
@@ -10,7 +10,6 @@ interface BaseQuestion {
 }
 
 export interface TextFieldQuestion extends BaseQuestion {
-
    inputType: 'text' | 'number';
 }
 
@@ -19,12 +18,20 @@ export interface RadioGroupQuestion extends BaseQuestion {
 }
 
 export interface CheckboxGroupQuestion extends RadioGroupQuestion {}
+
+export interface ImageSelectQuestion extends RadioGroupQuestion {
+   multiSelect: boolean;
+   choices: Array<{ text: string, value: string, imageLink?: string }>
+   imageWidth: number;
+   showLabel: true,
+}
 export interface BooleanQuestion extends BaseQuestion {
    labelTrue: string;
    labelFalse: string;
 }
 
-export type QuestionElement = TextFieldQuestion | RadioGroupQuestion | CheckboxGroupQuestion | BooleanQuestion;
+export type QuestionElement 
+   = TextFieldQuestion | RadioGroupQuestion | CheckboxGroupQuestion | BooleanQuestion | ImageSelectQuestion;
 
 export type NotRequiredQuestionElement = {
    name?: string;
@@ -35,6 +42,9 @@ export type NotRequiredQuestionElement = {
    isRequired?: boolean;
    labelTrue?: string;
    labelFalse?: string;
+   imageWidth?: number;
+   imageHeight?: number;
+   multiSelect?: boolean
 }
 
 export type ItemWrapper = {

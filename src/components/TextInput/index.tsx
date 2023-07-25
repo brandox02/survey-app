@@ -39,7 +39,7 @@ export default function TextInput({
                {label && <span className="font-semibold">{`${label}${removeDoublePoints ? '' : ':'} `}</span>}
                <input
                   disabled={!!disabled}
-                  className="disabled:bg-sky-100 disabled:text-blue-900 placeholder:italic font-semibold placeholder:text-slate-400 bg-white w-full border border-slate-300 rounded-md px-10 py-2 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1"
+                  className="disabled:bg-sky-100 disabled:text-blue-900 placeholder:italic font-semibold placeholder:text-slate-400 bg-white w-full border border-slate-300 rounded-md px-5 py-2 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1"
                   placeholder={placeholder}
                   type={type}
                   name="search"

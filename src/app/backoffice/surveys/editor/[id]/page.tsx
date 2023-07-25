@@ -83,7 +83,12 @@ export default function Editor() {
             onChange={e => setCurrentElement({ title: e.target.value })}
             falseLabel={(questions[index] as BooleanQuestion).labelFalse}
             trueLabel={(questions[index] as BooleanQuestion).labelTrue}
-         />
+         />,
+         imagepicker: <CheckboxGroup
+            value={questions[index]?.title || ''}
+            onChange={e => setCurrentElement({ title: e.target.value })}
+            choices={(questions[index] as CheckboxGroupQuestion).choices}
+         />,
       }
 
       return (obj as any)[question.type]
@@ -142,6 +147,17 @@ export default function Editor() {
             labelFalse: 'No',
             isRequired: true
          },
+         'imagepicker': {
+            name: id,
+            title: `Image Select`,
+            description: 'Descripción de la pregunta',
+            type: "imagepicker",
+            choices: [],
+            isRequired: true,
+            imageWidth: 100,
+            showLabel: true,
+            multiSelect: false
+         }
       }
 
       let newItem = (obj as any)[type];

@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { Button, Menu, Pagination, Table, Title } from '@mantine/core';
+import { Pagination, Table, Title } from '@mantine/core';
 import { gql, useQuery } from '@apollo/client';
 import Loader from '@/components/Loader';
 import Link from 'next/link';
@@ -83,7 +83,6 @@ export default function Answers() {
 
    return (
       <div className='p-10'>
-
          <div className='flex justify-between mb-5'>
             <Title order={2}>Respuestas</Title>
 

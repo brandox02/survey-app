@@ -3,10 +3,10 @@
 import TextField from "@/components/TextField";
 import { Button } from "@mantine/core";
 import { NotRequiredQuestionElement, QuestionElement } from "../../types";
-
 import BooleanManagementControl from "./BooleanManagementControl";
 import CheckboxGroupManagementControl from "./CheckboxGroupManagementControl";
 import CommentManagementControl from "./CommentManagementControl";
+import ImageSelectManagementControl from "./ImageSelectManagementControl";
 import RadioGroupManagementControl from "./RadioGroupManagementControl";
 import TextFieldManagementControl from "./TextFieldManagementControl";
 
@@ -26,20 +26,21 @@ export default function ManagementControl({ selectedElement, setCurrentElement, 
             radiogroup: <RadioGroupManagementControl {...props} />,
             checkbox: <CheckboxGroupManagementControl {...props} />,
             boolean: <BooleanManagementControl {...props} />,
+            imagepicker: <ImageSelectManagementControl {...props} />,
          }
          return (obj as any)[selectedElement.type]
       }
    }
    return (
       <div className='border w-4/12 bg-white '>
-         <div className='mt-5 font-bold text-lg text-center'>Configuración</div>
-         <div className='mt-10 px-10'>
+         <div className='mt-3 font-bold text-lg text-center'>Configuración</div>
+         <div className=' px-10'>
             <TextField
                label="Elemento"
                value={selectedElement?.type || ''} disabled onChange={() => { }}
             />
 
-            <TextField label="Nombre" value={selectedElement?.name || ''} onChange={(event) => setCurrentElement({ name: event.target.value })} disabled />
+            {/* <TextField label="Nombre" value={selectedElement?.name || ''} onChange={(event) => setCurrentElement({ name: event.target.value })} disabled /> */}
             <TextField
                label="Titulo"
                value={selectedElement?.title || ''}

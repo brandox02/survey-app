@@ -66,6 +66,7 @@ export default function Login() {
                         value={email}
                      />
                      <TextInput
+                        type='password'
                         label="Contraseña"
                         className=""
                         style={2}

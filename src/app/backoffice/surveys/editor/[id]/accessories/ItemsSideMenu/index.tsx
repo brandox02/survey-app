@@ -1,6 +1,7 @@
 'use client';
 
 import { BsCursorText, BsTextCenter, BsUiRadiosGrid } from 'react-icons/bs';
+import { PiImagesSquareDuotone } from 'react-icons/pi';
 import { GoCheckbox } from 'react-icons/go';
 import ItemSideMenu from './Item';
 import { VscSymbolBoolean } from 'react-icons/vsc';
@@ -21,6 +22,7 @@ export default function ItemsSideMenu({ onAddNewItem }: Props) {
             <ItemSideMenu onClick={() => onAddNewItem('radiogroup')} icon={BsUiRadiosGrid} label='Radio Group Input' />
             <ItemSideMenu onClick={() => onAddNewItem('checkbox')} icon={GoCheckbox} label='Checkbox Group' />
             <ItemSideMenu onClick={() => onAddNewItem('boolean')} icon={VscSymbolBoolean} label='Si/No Booleano' />
+            <ItemSideMenu onClick={() => onAddNewItem('imagepicker')} icon={PiImagesSquareDuotone} label='Image Select' />
          </div>
       </div>
    )

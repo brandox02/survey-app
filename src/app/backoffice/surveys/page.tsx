@@ -11,6 +11,7 @@ import { FaRegCopy } from 'react-icons/fa';
 import SelectField from '@/components/Select';
 import TextField from '@/components/TextField';
 import { useDebouncedState } from '@mantine/hooks';
+import { IoMdArrowDropdown } from 'react-icons/io';
 // import toast from 'react-hot-toast';
 
 
@@ -87,7 +88,7 @@ export default function Surveys() {
             )}
             <Menu shadow="md" >
                <Menu.Target>
-                  <Button>Opciones</Button>
+                  <Button rightIcon={<IoMdArrowDropdown size={25} />}>Opciones</Button>
                </Menu.Target>
                <Menu.Dropdown className=''>
                   <Link href={`/backoffice/surveys/editor/${element.id}?readonly=true`}>

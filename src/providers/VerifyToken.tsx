@@ -35,7 +35,6 @@ export default function VerifyToken({ children }: { children: ReactNode }) {
             const auth: LocalStorageAuthData = JSON.parse(authRaw);
             const { accessToken } = auth;
             if (accessToken) {
-               console.log("saving...", accessToken);
                // setAuthToken(accessToken);
                await fetchUserInfo();
             }
