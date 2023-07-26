@@ -15,11 +15,13 @@ type Props = {
 export default function PreviewModal({ close, isOpen, questions }: Props) {
 
    const surveyModel = new Model({
-      elements: questions.map((item: any) => ({
-         ...item,
-         choices: item.choices
-            .map((x: any) => ({ ...x, imageLink: x.imageLink || x.base64Image }))
-      }))
+      elements: questions.map((item: any) => [
+         'radiogroup', 'checkbox', 'imagepicker']
+         .includes(item.type) ? ({
+            ...item,
+            choices: item.choices
+               .map((x: any) => ({ ...x, imageLink: x.imageLink || x.base64Image }))
+         }) : item)
    });
 
    surveyModel.onComplete.add((data) => {

@@ -1,4 +1,4 @@
-import { CheckboxGroupQuestion, RadioGroupQuestion } from "@/app/backoffice/surveys/editor/[id]/types";
+import { CheckboxGroupQuestion, RadioGroupQuestion } from "@/app/backoffice/surveys/[id]/editor/[id]/types";
 import { useState } from "react";
 import { RxDragHandleDots2 } from "react-icons/rx";
 

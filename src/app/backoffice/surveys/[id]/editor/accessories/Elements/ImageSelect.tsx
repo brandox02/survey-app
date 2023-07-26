@@ -21,7 +21,7 @@ export default function ImageSelect({ onChange, value, choices }: ImageSelectPro
                value={value}
                onChange={onChange}
             />
-            <span className="text-emerald-500 font-medium">{'Checkbox Group'}</span>
+            <span className="text-emerald-500 font-medium">{'Image Select'}</span>
          </div>
 
          {(choices || []).map(item => (

@@ -32,9 +32,9 @@ export default function ManagementControl({ selectedElement, setCurrentElement, 
       }
    }
    return (
-      <div className='border w-4/12 bg-white '>
+      <div className='border w-4/12 bg-white overflow-auto '>
          <div className='mt-3 font-bold text-lg text-center'>Configuración</div>
-         <div className=' px-10'>
+         <div className='px-10'>
             <TextField
                label="Elemento"
                value={selectedElement?.type || ''} disabled onChange={() => { }}
@@ -48,7 +48,7 @@ export default function ManagementControl({ selectedElement, setCurrentElement, 
             />
             {getManagementControl()}
             <Button
-               className="mt-20" onClick={onDeleteCurrentElement} color='red' fullWidth>
+               className="mt-0" onClick={onDeleteCurrentElement} color='red' fullWidth>
                Eliminar este elemento
             </Button>
          </div>

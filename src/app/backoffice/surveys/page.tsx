@@ -91,10 +91,10 @@ export default function Surveys() {
                   <Button rightIcon={<IoMdArrowDropdown size={25} />}>Opciones</Button>
                </Menu.Target>
                <Menu.Dropdown className=''>
-                  <Link href={`/backoffice/surveys/editor/${element.id}?readonly=true`}>
+                  <Link href={`/backoffice/surveys/${element.id}/editor?readonly=true`}>
                      <Menu.Item className=''>Ver</Menu.Item>
                   </Link>
-                  <Link href={`/backoffice/surveys/editor/${element.id}`}>
+                  <Link href={`/backoffice/surveys/${element.id}/editor`}>
                      <Menu.Item className=''>Crear Nueva a Partir de esta</Menu.Item>
                   </Link>
                   <Link href={`/backoffice/answers?surveyId=${element.id}`}>
@@ -120,7 +120,7 @@ export default function Surveys() {
 
          <div className='flex justify-between'>
             <Title order={2}>Encuestas</Title>
-            <Link href={'/backoffice/surveys/editor/new'} onClick={() => setLoadingGoToAnotherPage(true)}>
+            <Link href={'/backoffice/surveys/new/editor'} onClick={() => setLoadingGoToAnotherPage(true)}>
                <Button
                   loading={loadingGoToAnotherPage}
                   variant={'light'}

@@ -1,12 +1,12 @@
 'use client';
 
-import { ManagementControlProps } from '@/app/backoffice/surveys/editor/[id]/accessories/ManagementControl';
+import { ManagementControlProps } from '@/app/backoffice/surveys/[id]/editor/[id]/accessories/ManagementControl';
 import { useState } from 'react';
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 import { GrAddCircle } from 'react-icons/gr'
 import { FaImage } from 'react-icons/fa'
 
-import { CheckboxGroupQuestion, ImageSelectQuestion, RadioGroupQuestion } from '@/app/backoffice/surveys/editor/[id]/types';
+import { CheckboxGroupQuestion, ImageSelectQuestion, RadioGroupQuestion } from '@/app/backoffice/surveys/[id]/editor/[id]/types';
 import { ImagePicker } from '../image-picker';
 import { Item } from './Item';
 import Modal from '../Modal';
@@ -38,7 +38,7 @@ export default function Choices({
    };
 
    const onDeleteItem = (index: number) => {
-      setCurrentElement({ choices: tSelectedElement.choices.filter((_, itemIndex) => itemIndex !== index) });
+      setCurrentElement({ choices: tSelectedElement.choices.filter((_: any, itemIndex: number) => itemIndex !== index) });
    }
 
    function onAddItem(text: string) {
@@ -52,7 +52,6 @@ export default function Choices({
 
    const listIsNotEmpty = !!tSelectedElement.choices.length;
 
-   console.log({ tSelectedElement })
    const choiceSelected = (tSelectedElement.choices[indexItemSelectedToAssignImage as any] as any);
    return (
       <div className="my-2">
@@ -67,7 +66,7 @@ export default function Choices({
                   choices:
                      tSelectedElement
                         .choices
-                        .map((item, index) =>
+                        .map((item: any, index: number) =>
                            index === indexItemSelectedToAssignImage
                               ? ({ ...item, base64Image: image })
                               : item)
@@ -95,7 +94,7 @@ export default function Choices({
                   <Droppable droppableId={`${selectedElement.name}`}>
                      {(provided) => (
                         <div ref={provided.innerRef} {...provided.droppableProps}>
-                           {tSelectedElement.choices.map(({ text, value }, index) => (
+                           {tSelectedElement.choices.map(({ text, value }: any, index: number) => (
                               <Draggable key={value} draggableId={value} index={index}>
                                  {(provided) => (
                                     <div
@@ -106,16 +105,21 @@ export default function Choices({
                                        <div key={value} className='border border-gray-200 px-3 py-1 flex justify-between items-center'>
                                           <div className='flex items-center gap-2 w-full'>
                                              <RxDragHandleDots2 className="cursor-grab" />
-                                             <FaImage className='cursor-pointer' onClick={() => {
-                                                setIndexItemSelectedToAssignImage(index);
-                                                setImageOpen(true);
-                                             }} />
+                                             {choiceSelected?.type === 'imagepicker' && (
+                                                <FaImage
+                                                   className='cursor-pointer'
+                                                   onClick={() => {
+                                                      setIndexItemSelectedToAssignImage(index);
+                                                      setImageOpen(true);
+                                                   }}
+                                                />
+                                             )}
                                              <input
                                                 className="outline-none hover:border py-1 border-gray-300"
                                                 value={text}
                                                 onChange={(e) => setCurrentElement({
                                                    choices: tSelectedElement.choices
-                                                      .map(rItem => rItem.value === value ?
+                                                      .map((rItem: any) => rItem.value === value ?
                                                          ({
                                                             ...rItem,
                                                             text: e.target.value,
