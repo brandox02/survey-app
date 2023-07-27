@@ -1,5 +1,4 @@
-import { CheckboxGroupQuestion, RadioGroupQuestion } from "@/app/backoffice/surveys/[id]/editor/[id]/types";
-import { useState } from "react";
+import { CheckboxGroupQuestion, RadioGroupQuestion } from "@/app/backoffice/surveys/[id]/editor/types";
 import { RxDragHandleDots2 } from "react-icons/rx";
 
 type ItemProps = {
@@ -11,8 +10,6 @@ type ItemProps = {
    index: number;
 }
 export function Item({ text, value, selectedItem, setCurrentElement, onDeleteItem, index }: ItemProps) {
-   const [image, setImage] = useState<any>();
-   const [open, setOpen] = useState<any>(true);
 
 
    return (

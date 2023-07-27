@@ -7,7 +7,6 @@ import { useParams } from "next/navigation";
 import Loader from "@/components/Loader";
 import { getRandomColorRGB } from "@/utils/getRandomColorRGB";
 import Link from "next/link";
-import { useMemo } from "react";
 
 ChartJS.register(ArcElement, Tooltip, Legend, CategoryScale, LinearScale, BarElement);
 
