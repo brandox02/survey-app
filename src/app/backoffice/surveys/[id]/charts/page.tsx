@@ -3,7 +3,7 @@ import { Chart as ChartJS, ArcElement, Tooltip, Legend, CategoryScale, LinearSca
 import { Doughnut, Bar } from "react-chartjs-2";
 import { Anchor, Breadcrumbs, Title } from "@mantine/core";
 import { gql, useQuery } from "@apollo/client";
-import { useParams } from "next/navigation";
+import { useParams, useSearchParams } from "next/navigation";
 import Loader from "@/components/Loader";
 import { getRandomColorRGB } from "@/utils/getRandomColorRGB";
 import Link from "next/link";
@@ -23,27 +23,17 @@ export default function Charts() {
          }
          }
    `, { variables: { where: { id: parseInt(id) } } });
-
-
+   const searchParams = useSearchParams();
 
    if (loading) {
       return <Loader />
    }
 
-   const data = {
-      labels: response.charts.items.map((item: any) => item.label),
-      datasets: [{
-         label: response.charts.title,
-         data: response.charts.items.map((item: any) => item.count),
-         backgroundColor: response.charts.items.map(() => getRandomColorRGB()),
-         hoverOffset: 4
-      }]
-   }
-
+   const title = searchParams.get('name');
 
    const items = [
       { title: 'Encuestas', href: '/backoffice/surveys' },
-      { title: `Estadísticas de ${response.charts.title}`, href: `/backoffice/surveys/${id}/charts` },
+      { title: `Estadísticas de ${title}`, href: `/backoffice/surveys/${id}/charts` },
    ].map((item, index) => (
       <Link href={item.href} key={index}>
          <Anchor>
@@ -52,7 +42,7 @@ export default function Charts() {
       </Link>
    ));
 
-   if (!response.charts.items.length) {
+   if (!response.charts.length) {
       return <div className="h-full w-full flex justify-center items-center">
          <div>
             <Breadcrumbs>{items}</Breadcrumbs>
@@ -64,17 +54,29 @@ export default function Charts() {
    return (
       <div className="p-10">
          <Breadcrumbs>{items}</Breadcrumbs>
-         <Title order={2} className='mt-10'>Estadísticas de {response.charts.title}</Title>
-         <div className="flex items-center gap-5  mt-10">
-            <div className="w-1/2">
-               <Title order={5} className='pt-5'>Gráfico de Barra</Title>
-               <Bar data={data} className='w-1/2' />
-            </div>
-            <div className="w-1/2">
-               <Title order={5} className='pt-5' >Gráfico Pastel</Title>
-               <Doughnut data={data} />
-            </div>
-         </div>
+         <Title order={2} className='mt-10'>Estadísticas de {title}</Title>
+         {response.charts.map((item: any, index: number) => {
+            const data = {
+               labels: item.items.map((item: any) => item.label),
+               datasets: [{
+                  label: item.title,
+                  data: item.items.map((item: any) => item.count),
+                  backgroundColor: item.items.map(() => getRandomColorRGB()),
+               }]
+            }
+            return (
+               <div key={index} className="flex items-center gap-5 border mt-10">
+                  <div className="w-1/2">
+                     <Title order={5} className='pt-5'>Gráfico de Barra</Title>
+                     <Bar data={data} className='w-1/2' />
+                  </div>
+                  <div className="w-1/2">
+                     <Title order={5} className='pt-5' >Gráfico Pastel</Title>
+                     <Doughnut data={data} />
+                  </div>
+               </div>
+            )
+         })}
       </div>
    )
 }
