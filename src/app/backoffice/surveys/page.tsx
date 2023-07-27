@@ -100,6 +100,9 @@ export default function Surveys() {
                   <Link href={`/backoffice/answers?surveyId=${element.id}`}>
                      <Menu.Item className=''>Ver Respuestas</Menu.Item>
                   </Link>
+                  <Link href={`/backoffice/surveys/${element.id}/charts`}>
+                     <Menu.Item className=''>Estadísticas</Menu.Item>
+                  </Link>
                </Menu.Dropdown>
             </Menu>
 

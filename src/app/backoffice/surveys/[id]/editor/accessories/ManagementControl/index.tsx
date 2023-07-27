@@ -39,7 +39,6 @@ export default function ManagementControl({ selectedElement, setCurrentElement, 
                label="Elemento"
                value={selectedElement?.type || ''} disabled onChange={() => { }}
             />
-
             {/* <TextField label="Nombre" value={selectedElement?.name || ''} onChange={(event) => setCurrentElement({ name: event.target.value })} disabled /> */}
             <TextField
                label="Titulo"

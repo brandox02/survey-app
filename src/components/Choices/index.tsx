@@ -1,17 +1,16 @@
 'use client';
 
-import { ManagementControlProps } from '@/app/backoffice/surveys/[id]/editor/[id]/accessories/ManagementControl';
 import { useState } from 'react';
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 import { GrAddCircle } from 'react-icons/gr'
 import { FaImage } from 'react-icons/fa'
 
-import { CheckboxGroupQuestion, ImageSelectQuestion, RadioGroupQuestion } from '@/app/backoffice/surveys/[id]/editor/[id]/types';
+import { CheckboxGroupQuestion, ImageSelectQuestion, RadioGroupQuestion } from '@/app/backoffice/surveys/[id]/editor/types';
 import { ImagePicker } from '../image-picker';
-import { Item } from './Item';
+
 import Modal from '../Modal';
 import { RxDragHandleDots2 } from 'react-icons/rx';
-
+import { ManagementControlProps } from '@/app/backoffice/surveys/[id]/editor/accessories/ManagementControl';
 
 interface Props extends ManagementControlProps {
    label?: string;
@@ -19,7 +18,8 @@ interface Props extends ManagementControlProps {
 }
 
 export default function Choices({
-   selectedElement, setCurrentElement,
+   selectedElement,
+   setCurrentElement,
    label = 'Opciones',
    onAddNewItem = (text: string) => ({ text, value: `${text}${Math.random() * 10000}` })
 }: Props) {
@@ -105,7 +105,7 @@ export default function Choices({
                                        <div key={value} className='border border-gray-200 px-3 py-1 flex justify-between items-center'>
                                           <div className='flex items-center gap-2 w-full'>
                                              <RxDragHandleDots2 className="cursor-grab" />
-                                             {choiceSelected?.type === 'imagepicker' && (
+                                             {tSelectedElement?.type === 'imagepicker' && (
                                                 <FaImage
                                                    className='cursor-pointer'
                                                    onClick={() => {
