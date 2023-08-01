@@ -51,6 +51,41 @@ export default function Charts() {
       </div>
    }
 
+   const customTooltip = (tooltipModel: any) => {
+      const imageUrls = response.charts.map((item: any) => 'https://s3.amazonaws.com/assets.fullstack.io/n/20200309095518221_react-chartjs.png');
+      let tooltipEl = document.getElementById("custom-tooltip");
+
+      if (!tooltipEl) {
+         tooltipEl = document.createElement("div");
+         tooltipEl.id = "custom-tooltip";
+         tooltipEl.classList.add("custom-tooltip");
+         document.body.appendChild(tooltipEl);
+      }
+
+      // Hide if no tooltip
+      if (tooltipModel.opacity === 0) {
+         tooltipEl.style.opacity = '0';
+         return;
+      }
+
+      // Set the position of the tooltip
+      tooltipEl.style.position = "absolute";
+      tooltipEl.style.left = `${tooltipModel.caretX}px`;
+      tooltipEl.style.top = `${tooltipModel.caretY}px`;
+      tooltipEl.style.pointerEvents = "none";
+
+      // Set the content of the tooltip (you can customize this part as needed)
+      if (tooltipModel.body) {
+         const dataPointIndex = tooltipModel.dataPoints[0].index;
+         const imageUrl = imageUrls[dataPointIndex];
+         const tooltipContent = `<img src="${imageUrl}" alt="Image" />`;
+         tooltipEl.innerHTML = tooltipContent;
+      }
+
+      // Show the tooltip
+      tooltipEl.style.opacity = '1';
+   };
+
    return (
       <div className="p-10">
          <Breadcrumbs>{items}</Breadcrumbs>
@@ -70,7 +105,21 @@ export default function Charts() {
                   <div className="flex items-center justify-around">
                      <div className="w-1/2">
                         <Title order={5} className='pt-5'>Gráfico de Barra</Title>
-                        <Bar data={data} className='w-2/8' />
+                        <Bar
+                           data={data}
+                           className='w-2/8'
+                        // options={{
+                        //    tooltips: {
+                        //       enabled: false,
+                        //       custom: customTooltip,
+                        //    },
+                        //    plugins: {
+                        //       datalabels: {
+                        //          display: false, // You can customize data labels if you use them
+                        //       }
+                        //    }
+                        // }}
+                        />
                      </div>
                      <div className="w-2/8">
                         <Title order={5} className='pt-5' >Gráfico Pastel</Title>

@@ -94,7 +94,7 @@ export default function Choices({
                   <Droppable droppableId={`${selectedElement.name}`}>
                      {(provided) => (
                         <div ref={provided.innerRef} {...provided.droppableProps}>
-                           {tSelectedElement.choices.map(({ text, value }: any, index: number) => (
+                           {tSelectedElement.choices.map(({ text, value, imageLink, base64Image }: any, index: number) => (
                               <Draggable key={value} draggableId={value} index={index}>
                                  {(provided) => (
                                     <div
@@ -107,6 +107,7 @@ export default function Choices({
                                              <RxDragHandleDots2 className="cursor-grab" />
                                              {tSelectedElement?.type === 'imagepicker' && (
                                                 <FaImage
+                                                   color={imageLink || base64Image ? 'blue' : 'red'}
                                                    className='cursor-pointer'
                                                    onClick={() => {
                                                       setIndexItemSelectedToAssignImage(index);

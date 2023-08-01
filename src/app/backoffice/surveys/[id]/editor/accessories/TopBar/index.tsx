@@ -7,14 +7,12 @@ import Cookie from 'js-cookie';
 import { QuestionElement } from '../../types';
 import manageGraphqlError from '@/utils/manageGraphqlError';
 import toast from 'react-hot-toast';
-import { usePathname, useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { IoArrowBackCircleSharp } from 'react-icons/io5';
 import { FaRegCopy } from 'react-icons/fa';
 import { VscPreview } from 'react-icons/vsc';
 import { AiOutlineSave, AiOutlineCheck } from 'react-icons/ai';
 import Link from 'next/link';
-
-
 
 
 type Props = {
@@ -39,6 +37,20 @@ export default function TopBar({ onClickPreview, setTitle, title, questions, id,
 
 
    const onSave = manageGraphqlError(async () => {
+      let imageValidationErrorMessage = '';
+      questions.forEach(item => {
+         return item.type === 'imagepicker' && !(item as any).choices.forEach((i: any) => {
+            if (!i.imageLink && !i.base64Image) {
+               imageValidationErrorMessage = `Debes asignar una imagen a la respuesta "${i.text}" de la pregunta "${item.title}"`;
+            }
+         })
+      });
+
+      if (imageValidationErrorMessage) {
+         toast.error(imageValidationErrorMessage);
+         return;
+      }
+
       const surveysUrl = '/backoffice/surveys';
       router.prefetch(surveysUrl);
       const userId = JSON.parse(Cookie.get('auth') || '')?.user.id;
@@ -47,7 +59,6 @@ export default function TopBar({ onClickPreview, setTitle, title, questions, id,
          title,
          content: questions,
       };
-
 
       await createSurveyMutation({ variables: { input: payload } });
       toast.success(`Encuesta creada exitosamente`);
