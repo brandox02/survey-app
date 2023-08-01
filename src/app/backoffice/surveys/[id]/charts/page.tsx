@@ -65,14 +65,17 @@ export default function Charts() {
                }]
             }
             return (
-               <div key={index} className="flex items-center gap-5 border mt-10">
-                  <div className="w-1/2">
-                     <Title order={5} className='pt-5'>Gráfico de Barra</Title>
-                     <Bar data={data} className='w-1/2' />
-                  </div>
-                  <div className="w-1/2">
-                     <Title order={5} className='pt-5' >Gráfico Pastel</Title>
-                     <Doughnut data={data} />
+               <div key={index} className='my-10'>
+                  <Title order={4}>{item.title}</Title>
+                  <div className="flex items-center justify-around">
+                     <div className="w-1/2">
+                        <Title order={5} className='pt-5'>Gráfico de Barra</Title>
+                        <Bar data={data} className='w-2/8' />
+                     </div>
+                     <div className="w-2/8">
+                        <Title order={5} className='pt-5' >Gráfico Pastel</Title>
+                        <Doughnut data={data} />
+                     </div>
                   </div>
                </div>
             )
